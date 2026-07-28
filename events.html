@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IEEE at SFSU | Events</title>
+    <meta
+      name="description"
+      content="Upcoming events for IEEE at San Francisco State University."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind-theme.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body data-page="events" class="min-h-screen overflow-x-hidden bg-slate-950 text-slate-100">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <div id="loader" class="loader" aria-live="polite" aria-label="Loading IEEE at SFSU">
+      <div class="loader-frame">
+        <div class="loader-core"></div>
+        <div class="loader-orbit"></div>
+        <div class="loader-orbit loader-orbit-delayed"></div>
+      </div>
+      <p class="loader-text">Powering up IEEE at SFSU</p>
+    </div>
+
+    <div id="site-shell" class="relative opacity-0 transition-opacity duration-500">
+      <div class="circuit-bg" aria-hidden="true"></div>
+      <header data-site-header></header>
+
+      <main id="main-content" class="pb-24">
+        <section class="mx-auto max-w-7xl px-6 pb-12 pt-16 lg:px-8 lg:pt-24">
+          <div class="max-w-3xl" data-reveal>
+            <p class="text-sm font-semibold uppercase tracking-[0.24em] text-ieee-200">Events</p>
+            <h1 class="mt-4 text-4xl font-black text-white sm:text-5xl">A dedicated page for upcoming chapter events.</h1>
+            <p class="mt-6 text-lg leading-8 text-slate-300">
+              The homepage now gives quick previews, while this page holds the longer descriptions, dates, categories, and call-to-action buttons.
+            </p>
+          </div>
+        </section>
+
+        <section class="mx-auto max-w-7xl px-6 py-2 lg:px-8">
+          <div id="featured-event" data-reveal></div>
+        </section>
+
+        <section class="mx-auto max-w-7xl px-6 py-12 lg:px-8">
+          <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between" data-reveal>
+            <div>
+              <p class="text-sm font-semibold uppercase tracking-[0.24em] text-sfsu-300">Browse events</p>
+              <h2 class="mt-3 text-3xl font-bold text-white">Filter by event type.</h2>
+            </div>
+            <div id="event-filters" class="flex flex-wrap gap-3"></div>
+          </div>
+          <div id="events-list" class="mt-10 grid gap-6 lg:grid-cols-2"></div>
+        </section>
+
+        <section class="mx-auto max-w-7xl px-6 py-12 lg:px-8">
+          <div class="rounded-[2rem] border border-white/10 bg-slate-900/75 p-8 shadow-panel" data-reveal>
+            <div class="grid gap-8 lg:grid-cols-[1fr_0.9fr] lg:items-end">
+              <div>
+                <p class="text-sm font-semibold uppercase tracking-[0.24em] text-sfsu-300">Planning note</p>
+                <h2 class="mt-3 text-3xl font-bold text-white">Easy future upgrades for this page.</h2>
+                <p class="mt-4 max-w-2xl text-base leading-8 text-slate-300">
+                  When your chapter is ready, this page can grow into RSVP forms, speaker bios, downloadable flyers, or a calendar embed without needing a full redesign.
+                </p>
+              </div>
+              <div class="flex flex-wrap gap-4 lg:justify-end">
+                <a href="calendar.html" class="rounded-full bg-ieee-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-ieee-800">
+                  Open chapter calendar
+                </a>
+                <a href="past-events.html" class="rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition hover:border-ieee-300/40 hover:bg-white/10">
+                  See past events
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer data-site-footer></footer>
+    </div>
+
+    <script src="content.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
