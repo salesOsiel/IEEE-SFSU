@@ -18,7 +18,7 @@ window.siteContent = {
     footerLinks: [
       { label: "Home", href: "index.html" },
       { label: "About", href: "index.html#about" },
-      { label: "Events", href: "events.html" },
+      { label: "Event Calendar", href: "event-calendar.html" },
       { label: "Officers", href: "officers.html" },
       { label: "Membership", href: "membership.html" }
     ]
@@ -35,14 +35,13 @@ window.siteContent = {
     },
     { label: "Membership", href: "membership.html" },
     { label: "Officers", href: "officers.html" },
-    { label: "Events", href: "events.html" },
-    { label: "Calendar", href: "calendar.html" },
+    { label: "Event Calendar", href: "event-calendar.html" },
     {
       label: "Past Events",
       links: [
-        { label: "2025-2026", href: "past-events.html#year-2025-2026" },
-        { label: "2024-2025", href: "past-events.html#year-2024-2025" },
-        { label: "2023-2024", href: "past-events.html#year-2023-2024" }
+        { label: "24-25", href: "past-events.html#year-24-25" },
+        { label: "25-26", href: "past-events.html#year-25-26" },
+        { label: "26-27", href: "past-events.html#year-26-27" }
       ]
     }
   ],
@@ -135,7 +134,7 @@ window.siteContent = {
       label: "Research and industry",
       title: "Make technical growth visible",
       description: "Highlight faculty conversations, alumni panels, or project showcases without adding too much homepage clutter.",
-      href: "events.html"
+      href: "event-calendar.html"
     },
     {
       label: "SFSU pride",
@@ -144,80 +143,40 @@ window.siteContent = {
       href: "officers.html"
     }
   ],
+  eventFilters: ["IEEE", "Solar Regatta", "ASME", "Chomp City", "Research"],
+  googleCalendar: {
+    apiKey: "",
+    calendarId: "",
+    maxResults: 6,
+    timeZone: "America/Los_Angeles"
+  },
   upcomingEvents: [
     {
-      slug: "fall-kickoff-open-house",
-      title: "Fall Kickoff Open House",
-      category: "Social",
+      slug: "ieee-general-meeting",
+      title: "IEEE General Meeting",
+      category: "IEEE",
       date: "August 27, 2026",
-      time: "4:30 PM to 6:00 PM",
-      location: "Engineering Building Courtyard",
-      description: "A welcome event with chapter intros, officer meet-and-greet, and project ideas for the semester.",
-      details: "Use this featured event slot for your first meeting of the term, a mixer, or a new-member orientation. You can swap the text, date, and image in content.js.",
-      image: "https://placehold.co/1200x720/004c79/f8fafc?text=Fall+Kickoff+Open+House",
-      alt: "Placeholder image labeled Fall Kickoff Open House.",
-      featured: true,
-      ctaText: "RSVP placeholder",
+      time: "4:30 PM to 5:30 PM",
+      location: "Engineering Building, Room TBD",
+      description: "A placeholder chapter meeting for announcements, project updates, and member planning.",
+      details: "Replace this with the next IEEE meeting details once the semester schedule is confirmed.",
+      image: "https://placehold.co/1200x720/004c79/f8fafc?text=IEEE+General+Meeting",
+      alt: "Placeholder image labeled IEEE General Meeting.",
+      ctaText: "Meeting details placeholder",
       registerLink: "#"
     },
     {
-      slug: "pcb-bootcamp",
-      title: "PCB Bootcamp",
-      category: "Workshop",
+      slug: "solar-regatta-info-session",
+      title: "Solar Regatta Info Session",
+      category: "Solar Regatta",
       date: "September 10, 2026",
-      time: "5:00 PM to 7:00 PM",
-      location: "Engineering Building Lab",
-      description: "A beginner-friendly session covering board layout thinking, component placement, and common design habits.",
-      details: "This is a good place for a longer workshop description, prerequisites, and what attendees should bring or install beforehand.",
-      image: "https://placehold.co/1200x720/0a2a40/f8fafc?text=PCB+Bootcamp",
-      alt: "Placeholder image labeled PCB Bootcamp.",
-      featured: false,
-      ctaText: "Workshop details placeholder",
-      registerLink: "#"
-    },
-    {
-      slug: "robotics-control-sprint",
-      title: "Robotics Control Sprint",
-      category: "Project",
-      date: "October 1, 2026",
-      time: "4:00 PM to 6:30 PM",
+      time: "5:00 PM to 6:00 PM",
       location: "Maker Space TBD",
-      description: "A project-oriented session focused on integrating sensors, control logic, and test loops in small robotic systems.",
-      details: "This card is built to hold more detail than the homepage preview, so students get the quick glance on Home and the expanded version here.",
-      image: "https://placehold.co/1200x720/3d1846/f8fafc?text=Robotics+Control+Sprint",
-      alt: "Placeholder image labeled Robotics Control Sprint.",
-      featured: false,
-      ctaText: "Project night placeholder",
-      registerLink: "#"
-    },
-    {
-      slug: "research-mixer",
-      title: "Research Mixer",
-      category: "Research",
-      date: "October 15, 2026",
-      time: "5:30 PM to 7:00 PM",
-      location: "Science Building Lounge",
-      description: "Meet peers interested in research, learn what faculty labs are working on, and share project interests.",
-      details: "You can turn this into a research night, poster review, or faculty Q and A event with very little editing.",
-      image: "https://placehold.co/1200x720/725400/f8fafc?text=Research+Mixer",
-      alt: "Placeholder image labeled Research Mixer.",
-      featured: false,
-      ctaText: "Mixer details placeholder",
-      registerLink: "#"
-    },
-    {
-      slug: "alumni-industry-panel",
-      title: "Alumni Industry Panel",
-      category: "Career",
-      date: "November 5, 2026",
-      time: "5:00 PM to 6:30 PM",
-      location: "Library Event Room",
-      description: "An evening panel on internships, first jobs, and how student projects translate into industry opportunities.",
-      details: "Use this area for speaker names, sponsor logos, parking notes, or a sign-up form link when those details are ready.",
-      image: "https://placehold.co/1200x720/00629b/f8fafc?text=Alumni+Industry+Panel",
-      alt: "Placeholder image labeled Alumni Industry Panel.",
-      featured: false,
-      ctaText: "Panel details placeholder",
+      description: "A placeholder partner-org event for students interested in electrical systems, boat design, and competition teams.",
+      details: "Use this container for other organization events that IEEE members may want to attend.",
+      image: "https://placehold.co/1200x720/3d1846/f8fafc?text=Solar+Regatta+Info+Session",
+      alt: "Placeholder image labeled Solar Regatta Info Session.",
+      ctaText: "Event details placeholder",
       registerLink: "#"
     }
   ],
@@ -341,76 +300,10 @@ window.siteContent = {
       alt: "Placeholder image labeled Outreach Director."
     }
   ],
-  calendarItems: [
-    {
-      month: "August 2026",
-      theme: "Launch the semester",
-      events: [
-        {
-          date: "Aug 27",
-          title: "Fall Kickoff Open House",
-          details: "Start the term with introductions, lab goals, and a quick chapter overview."
-        },
-        {
-          date: "Aug 31",
-          title: "Officer planning check-in",
-          details: "Use internal meetings to align responsibilities and confirm event leads."
-        }
-      ]
-    },
-    {
-      month: "September 2026",
-      theme: "Skill building",
-      events: [
-        {
-          date: "Sep 10",
-          title: "PCB Bootcamp",
-          details: "A focused workshop week that helps new members get comfortable with hardware workflows."
-        },
-        {
-          date: "Sep 24",
-          title: "Open lab and mentor night",
-          details: "Reserve room for peer feedback, debugging help, and project pairing."
-        }
-      ]
-    },
-    {
-      month: "October 2026",
-      theme: "Projects and research",
-      events: [
-        {
-          date: "Oct 1",
-          title: "Robotics Control Sprint",
-          details: "Push active project teams forward with a structured build night."
-        },
-        {
-          date: "Oct 15",
-          title: "Research Mixer",
-          details: "Invite faculty, alumni, or grad students to talk about current work and entry points."
-        }
-      ]
-    },
-    {
-      month: "November 2026",
-      theme: "Career connection",
-      events: [
-        {
-          date: "Nov 5",
-          title: "Alumni Industry Panel",
-          details: "Share practical advice on internships, resumes, and early-career decision making."
-        },
-        {
-          date: "Nov 19",
-          title: "Semester project showcase",
-          details: "Close the term with demos, reflection, and photos for the next version of the website."
-        }
-      ]
-    }
-  ],
   archiveYears: [
     {
-      id: "year-2025-2026",
-      year: "2025-2026",
+      id: "year-24-25",
+      year: "24-25",
       summary: "Placeholder archive area for chapter recaps, photos, and simple year-by-year highlights.",
       events: [
         {
@@ -426,8 +319,8 @@ window.siteContent = {
       ]
     },
     {
-      id: "year-2024-2025",
-      year: "2024-2025",
+      id: "year-25-26",
+      year: "25-26",
       summary: "Use this section for old flyers, event recaps, competition photos, or leadership transitions.",
       events: [
         {
@@ -443,9 +336,9 @@ window.siteContent = {
       ]
     },
     {
-      id: "year-2023-2024",
-      year: "2023-2024",
-      summary: "This final archive block gives you a simple pattern to copy if you want to add more academic years later.",
+      id: "year-26-27",
+      year: "26-27",
+      summary: "Use this current-year archive section for events once they have passed.",
       events: [
         {
           season: "Fall",

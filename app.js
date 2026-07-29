@@ -22,6 +22,15 @@
     return fileFromHref(href) === currentFile;
   }
 
+  function escapeHtml(value) {
+    return String(value || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
   function renderHeader() {
     const header = document.querySelector("[data-site-header]");
 
@@ -380,7 +389,7 @@
             </div>
             <h3 class="mt-4 text-xl font-bold text-white">${event.title}</h3>
             <p class="mt-3 text-sm leading-7 text-slate-300">${event.description}</p>
-            <a href="events.html#${event.slug}" class="mt-6 inline-flex items-center text-sm font-semibold text-ieee-200 transition hover:text-white">
+            <a href="event-calendar.html#${event.slug}" class="mt-6 inline-flex items-center text-sm font-semibold text-ieee-200 transition hover:text-white">
               See event details
             </a>
           </article>
@@ -583,42 +592,6 @@
     startTimer();
   }
 
-  function renderFeaturedEvent() {
-    const target = document.getElementById("featured-event");
-
-    if (!target) {
-      return;
-    }
-
-    const event = content.upcomingEvents.find((item) => item.featured) || content.upcomingEvents[0];
-
-    target.innerHTML = `
-      <article class="grid gap-8 overflow-hidden rounded-[2rem] border border-white/10 bg-slate-900/80 shadow-panel lg:grid-cols-[1.05fr_0.95fr]">
-        <div class="overflow-hidden">
-          <img src="${event.image}" alt="${event.alt}" class="h-full w-full object-cover" />
-        </div>
-        <div class="p-8 sm:p-10">
-          <p class="text-sm font-semibold uppercase tracking-[0.24em] text-sfsu-300">Featured event</p>
-          <h2 class="mt-4 text-3xl font-bold text-white">${event.title}</h2>
-          <p class="mt-4 text-base leading-8 text-slate-300">${event.details}</p>
-          <div class="mt-6 grid gap-2 text-sm text-slate-300">
-            <p><span class="font-semibold text-white">Date:</span> ${event.date}</p>
-            <p><span class="font-semibold text-white">Time:</span> ${event.time}</p>
-            <p><span class="font-semibold text-white">Location:</span> ${event.location}</p>
-          </div>
-          <div class="mt-8 flex flex-wrap gap-4">
-            <a href="${event.registerLink}" class="rounded-full bg-ieee-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-ieee-800">
-              ${event.ctaText}
-            </a>
-            <a href="calendar.html" class="rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:border-ieee-300/40 hover:bg-white/10">
-              View semester calendar
-            </a>
-          </div>
-        </div>
-      </article>
-    `;
-  }
-
   function renderEventsPage() {
     const listTarget = document.getElementById("events-list");
     const filtersTarget = document.getElementById("event-filters");
@@ -627,10 +600,9 @@
       return;
     }
 
-    const categories = ["All"].concat(
-      Array.from(new Set(content.upcomingEvents.map((event) => event.category)))
-    );
-    let activeCategory = "All";
+    const categories =
+      content.eventFilters || Array.from(new Set(content.upcomingEvents.map((event) => event.category)));
+    let activeCategory = "";
 
     function renderFilters() {
       filtersTarget.innerHTML = categories
@@ -653,7 +625,7 @@
 
       filtersTarget.querySelectorAll("[data-category]").forEach((button) => {
         button.addEventListener("click", function () {
-          activeCategory = this.dataset.category;
+          activeCategory = activeCategory === this.dataset.category ? "" : this.dataset.category;
           renderFilters();
           renderCards();
         });
@@ -662,9 +634,24 @@
 
     function renderCards() {
       const visibleEvents =
-        activeCategory === "All"
+        !activeCategory
           ? content.upcomingEvents
           : content.upcomingEvents.filter((event) => event.category === activeCategory);
+
+      if (!visibleEvents.length) {
+        const emptyCategoryLabel = activeCategory || "Future event";
+
+        listTarget.innerHTML = `
+          <article class="rounded-[1.9rem] border border-dashed border-white/15 bg-slate-900/55 p-6 text-center shadow-panel lg:col-span-2">
+            <p class="text-sm font-semibold uppercase tracking-[0.24em] text-sfsu-300">No upcoming events yet</p>
+            <h3 class="mt-3 text-2xl font-bold text-white">${escapeHtml(emptyCategoryLabel)} placeholders can be added next.</h3>
+            <p class="mx-auto mt-3 max-w-2xl text-sm leading-7 text-slate-300">
+              Add a new event object in content.js using this category name, and it will appear here automatically.
+            </p>
+          </article>
+        `;
+        return;
+      }
 
       listTarget.innerHTML = visibleEvents
         .map(
@@ -704,6 +691,124 @@
     renderCards();
   }
 
+  function renderGoogleCalendar() {
+    const target = document.getElementById("google-calendar-panel");
+
+    if (!target) {
+      return;
+    }
+
+    const settings = content.googleCalendar || {};
+
+    if (!settings.apiKey || !settings.calendarId) {
+      target.innerHTML = `
+        <div class="rounded-[2rem] border border-white/10 bg-slate-900/75 p-8 shadow-panel">
+          <div class="grid gap-8 lg:grid-cols-[1fr_0.9fr] lg:items-start">
+            <div>
+              <p class="text-sm font-semibold uppercase tracking-[0.24em] text-sfsu-300">Google Calendar API</p>
+              <h2 class="mt-3 text-3xl font-bold text-white">Chapter calendar connection</h2>
+              <p class="mt-4 max-w-2xl text-base leading-8 text-slate-300">
+                Add your Google Calendar API key and calendar ID in content.js to show live calendar items here.
+              </p>
+            </div>
+            <div class="grid gap-3 text-sm">
+              <div class="rounded-[1.25rem] border border-white/10 bg-slate-950/70 p-4">
+                <p class="font-semibold text-white">apiKey</p>
+                <p class="mt-1 text-slate-400">content.googleCalendar.apiKey</p>
+              </div>
+              <div class="rounded-[1.25rem] border border-white/10 bg-slate-950/70 p-4">
+                <p class="font-semibold text-white">calendarId</p>
+                <p class="mt-1 text-slate-400">content.googleCalendar.calendarId</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
+    target.innerHTML = `
+      <div class="rounded-[2rem] border border-white/10 bg-slate-900/75 p-8 shadow-panel">
+        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-sfsu-300">Google Calendar API</p>
+        <h2 class="mt-3 text-3xl font-bold text-white">Loading calendar events...</h2>
+      </div>
+    `;
+
+    const params = new URLSearchParams({
+      key: settings.apiKey,
+      singleEvents: "true",
+      orderBy: "startTime",
+      timeMin: new Date().toISOString(),
+      maxResults: String(settings.maxResults || 6)
+    });
+
+    fetch(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(settings.calendarId)}/events?${params}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Calendar request failed");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const items = data.items || [];
+
+        target.innerHTML = `
+          <div class="rounded-[2rem] border border-white/10 bg-slate-900/75 p-8 shadow-panel">
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <p class="text-sm font-semibold uppercase tracking-[0.24em] text-sfsu-300">Google Calendar API</p>
+                <h2 class="mt-3 text-3xl font-bold text-white">Live chapter calendar</h2>
+              </div>
+              <p class="max-w-xl text-sm leading-7 text-slate-300">
+                Events below are pulled from the configured Google Calendar.
+              </p>
+            </div>
+            <div class="mt-8 grid gap-4 lg:grid-cols-2">
+              ${
+                items.length
+                  ? items.map(renderGoogleCalendarItem).join("")
+                  : '<p class="rounded-[1.25rem] border border-white/10 bg-slate-950/70 p-4 text-sm text-slate-300">No upcoming Google Calendar events found.</p>'
+              }
+            </div>
+          </div>
+        `;
+      })
+      .catch(() => {
+        target.innerHTML = `
+          <div class="rounded-[2rem] border border-white/10 bg-slate-900/75 p-8 shadow-panel">
+            <p class="text-sm font-semibold uppercase tracking-[0.24em] text-sfsu-300">Google Calendar API</p>
+            <h2 class="mt-3 text-3xl font-bold text-white">Calendar could not load</h2>
+            <p class="mt-4 max-w-2xl text-base leading-8 text-slate-300">
+              Check the API key, calendar ID, public calendar access, and browser console details.
+            </p>
+          </div>
+        `;
+      });
+  }
+
+  function renderGoogleCalendarItem(item) {
+    const start = item.start || {};
+    const date = start.dateTime || start.date || "";
+    const dateFormatOptions = start.dateTime
+      ? { dateStyle: "medium", timeStyle: "short" }
+      : { dateStyle: "medium" };
+    const formattedDate = date
+      ? new Date(date).toLocaleString("en-US", dateFormatOptions)
+      : "Date TBD";
+
+    return `
+      <article class="rounded-[1.5rem] border border-white/10 bg-slate-950/70 p-5">
+        <p class="text-sm font-semibold text-ieee-200">${escapeHtml(formattedDate)}</p>
+        <h3 class="mt-3 text-xl font-bold text-white">${escapeHtml(item.summary || "Untitled event")}</h3>
+        ${
+          item.location
+            ? `<p class="mt-3 text-sm leading-7 text-slate-300">${escapeHtml(item.location)}</p>`
+            : ""
+        }
+      </article>
+    `;
+  }
+
   function renderOfficers() {
     const target = document.getElementById("officer-grid");
 
@@ -730,37 +835,6 @@
                   <p><span class="font-semibold text-white">Email:</span> <a href="mailto:${officer.email}" class="text-ieee-200 transition hover:text-white">${officer.email}</a></p>
                 </div>
               </details>
-            </div>
-          </article>
-        `
-      )
-      .join("");
-  }
-
-  function renderCalendar() {
-    const target = document.getElementById("calendar-grid");
-
-    if (!target) {
-      return;
-    }
-
-    target.innerHTML = content.calendarItems
-      .map(
-        (month) => `
-          <article class="rounded-[1.9rem] border border-white/10 bg-slate-900/80 p-6 shadow-panel" data-reveal>
-            <p class="text-sm font-semibold uppercase tracking-[0.24em] text-sfsu-300">${month.month}</p>
-            <h3 class="mt-3 text-2xl font-bold text-white">${month.theme}</h3>
-            <div class="mt-6 grid gap-4">
-              ${month.events
-                .map(
-                  (event) => `
-                    <div class="rounded-[1.4rem] bg-slate-950/70 p-4">
-                      <p class="text-sm font-semibold text-white">${event.date} | ${event.title}</p>
-                      <p class="mt-2 text-sm leading-7 text-slate-300">${event.details}</p>
-                    </div>
-                  `
-                )
-                .join("")}
             </div>
           </article>
         `
@@ -1001,10 +1075,9 @@
     renderFaq();
     renderMembershipBenefits();
     renderJoinSteps();
-    renderFeaturedEvent();
     renderEventsPage();
+    renderGoogleCalendar();
     renderOfficers();
-    renderCalendar();
     renderArchives();
     bindNavigationUi();
     initReveal();
