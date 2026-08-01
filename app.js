@@ -22,6 +22,20 @@
     return fileFromHref(href) === currentFile;
   }
 
+  function hashFromHref(href) {
+    const hashIndex = href.indexOf("#");
+    return hashIndex === -1 ? "" : href.slice(hashIndex);
+  }
+
+  function isActiveDropdownLink(href) {
+    if (fileFromHref(href) !== currentFile) {
+      return false;
+    }
+
+    const hash = hashFromHref(href);
+    return hash ? window.location.hash === hash : !window.location.hash;
+  }
+
   function escapeHtml(value) {
     return String(value || "")
       .replace(/&/g, "&amp;")
@@ -107,26 +121,32 @@
     }
 
     const childActive = item.links.some((link) => isActiveHref(link.href));
-    const summaryClasses = childActive
+    const triggerClasses = childActive
       ? "bg-ieee-500/15 text-ieee-100"
       : "text-slate-300 hover:bg-white/5 hover:text-white";
+    const primaryHref = item.links[0]?.href || "index.html";
 
     return `
-      <details class="nav-dropdown relative">
-        <summary class="flex list-none cursor-pointer items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition ${summaryClasses}">
+      <div class="desktop-nav-dropdown relative">
+        <a
+          href="${primaryHref}"
+          class="desktop-nav-trigger flex list-none cursor-pointer items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition ${triggerClasses}"
+          aria-haspopup="true"
+        >
           <span>${item.label}</span>
           <svg xmlns="http://www.w3.org/2000/svg" class="dropdown-icon h-4 w-4 transition" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.51a.75.75 0 01-1.08 0l-4.25-4.51a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
           </svg>
-        </summary>
-        <div class="absolute left-0 top-full mt-3 w-60 rounded-3xl border border-white/10 bg-slate-950/95 p-2 shadow-panel">
+        </a>
+        <div class="desktop-dropdown-menu absolute left-0 top-full mt-3 w-60 rounded-3xl border border-white/10 bg-slate-950/95 p-2 shadow-panel">
           ${item.links
-            .map((link) => {
-              const active = isActiveHref(link.href);
+            .map((link, index) => {
+              const active = isActiveDropdownLink(link.href);
               return `
                 <a
                   href="${link.href}"
-                  class="block rounded-2xl px-4 py-3 text-sm transition ${
+                  style="--dropdown-index: ${index};"
+                  class="desktop-dropdown-item block rounded-2xl px-4 py-3 text-sm transition ${
                     active
                       ? "bg-ieee-500/15 font-semibold text-ieee-100"
                       : "text-slate-300 hover:bg-white/5 hover:text-white"
@@ -138,7 +158,7 @@
             })
             .join("")}
         </div>
-      </details>
+      </div>
     `;
   }
 
@@ -175,7 +195,7 @@
         <div class="mt-2 grid gap-1 px-1 pb-1">
           ${item.links
             .map((link) => {
-              const active = isActiveHref(link.href);
+              const active = isActiveDropdownLink(link.href);
               return `
                 <a
                   href="${link.href}"

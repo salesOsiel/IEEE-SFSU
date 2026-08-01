@@ -24,10 +24,10 @@ window.siteContent = {
     ]
   },
   navigation: [
-    { label: "Home", href: "index.html" },
     {
-      label: "About",
+      label: "Home",
       links: [
+        { label: "Home", href: "index.html" },
         { label: "Our chapter", href: "index.html#about" },
         { label: "Focus areas", href: "index.html#pillars" },
         { label: "FAQ", href: "index.html#faq" }
