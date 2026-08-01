@@ -113,19 +113,169 @@ body[data-page="home"] .circuit-bg::before {
   justify-content: center;
   gap: 1rem;
   background:
-    radial-gradient(circle at 30% 20%, rgba(16, 134, 214, 0.18), transparent 24%),
-    radial-gradient(circle at 75% 22%, rgba(108, 48, 125, 0.16), transparent 18%),
-    linear-gradient(180deg, rgba(8, 22, 39, 0.98), rgba(8, 22, 39, 1));
+    radial-gradient(circle at 50% 50%, rgba(16, 134, 214, 0.08), transparent 28%),
+    linear-gradient(180deg, rgba(1, 4, 12, 1), rgba(2, 6, 23, 1));
   z-index: 90;
-  transition: opacity 450ms ease, visibility 450ms ease;
+  isolation: isolate;
+  overflow: hidden;
+  transform: translateY(0);
+  transition:
+    transform 580ms cubic-bezier(0.72, 0, 0.18, 1),
+    visibility 0s linear 580ms;
+}
+
+.loader::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    url("data:image/svg+xml,%3Csvg width='1200' height='420' viewBox='0 0 1200 420' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 210H1200' stroke='rgb(125,211,252)' stroke-opacity='0.14' stroke-width='1'/%3E%3Cpath d='M600 34V386' stroke='rgb(125,211,252)' stroke-opacity='0.1' stroke-width='1'/%3E%3Cpath d='M0 210 C35 206 52 218 70 210 C90 198 105 198 125 210 C150 226 170 226 190 210 C215 188 235 188 260 210 C290 240 320 240 350 210 C382 165 414 165 446 210 C475 270 502 276 520 210 C545 108 570 40 600 40 C630 40 655 108 680 210 C698 276 725 270 754 210 C786 165 818 165 850 210 C880 240 910 240 940 210 C965 188 985 188 1010 210 C1030 226 1050 226 1075 210 C1095 198 1110 198 1130 210 C1148 218 1165 206 1200 210' fill='none' stroke='rgb(125,211,252)' stroke-opacity='0.56' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E")
+      left center / 100vw min(42rem, 76vh) no-repeat;
+  filter: drop-shadow(0 0 12px rgba(16, 134, 214, 0.22));
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
+  animation: loaderSincDraw 640ms cubic-bezier(0.12, 0.82, 0.18, 1) 40ms forwards;
+  pointer-events: none;
 }
 
 .loader.is-hidden {
-  opacity: 0;
+  transform: translateY(110vh);
   visibility: hidden;
   pointer-events: none;
 }
 
+.loader-terminal {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  min-width: min(15rem, calc(100vw - 2rem));
+  justify-items: center;
+  gap: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+.loader-terminal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(125, 211, 252, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(125, 211, 252, 0.035) 1px, transparent 1px);
+  background-size: 22px 22px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loader-kicker,
+.loader-word,
+.loader-text {
+  position: relative;
+  z-index: 1;
+}
+
+.loader-kicker {
+  color: rgba(125, 211, 252, 0.86);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.loader-word {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.42rem;
+  width: clamp(4.35rem, 11vw, 6.25rem);
+  min-width: 0;
+  aspect-ratio: 1;
+  align-items: stretch;
+  justify-content: stretch;
+  color: rgba(226, 247, 255, 0.94);
+  font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
+  font-size: clamp(1.05rem, 2.8vw, 1.75rem);
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 1;
+  padding: 0.62rem;
+  -webkit-text-stroke: 0.45px rgba(125, 211, 252, 0.32);
+  text-shadow: 0 0 6px rgba(125, 211, 252, 0.3);
+  text-transform: uppercase;
+}
+
+.loader-word::before {
+  content: "";
+  position: absolute;
+  inset: 0.18rem;
+  border: 1px solid rgba(125, 211, 252, 0.2);
+  opacity: 0;
+  transform: scale(0.94);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+.loader-word::after {
+  content: "";
+  position: absolute;
+  inset: -0.05rem;
+  background:
+    linear-gradient(rgba(125, 211, 252, 0.42), rgba(125, 211, 252, 0.42)) left top / 0.85rem 1px no-repeat,
+    linear-gradient(rgba(125, 211, 252, 0.42), rgba(125, 211, 252, 0.42)) left top / 1px 0.85rem no-repeat,
+    linear-gradient(rgba(125, 211, 252, 0.42), rgba(125, 211, 252, 0.42)) right top / 0.85rem 1px no-repeat,
+    linear-gradient(rgba(125, 211, 252, 0.42), rgba(125, 211, 252, 0.42)) right top / 1px 0.85rem no-repeat,
+    linear-gradient(rgba(125, 211, 252, 0.42), rgba(125, 211, 252, 0.42)) left bottom / 0.85rem 1px no-repeat,
+    linear-gradient(rgba(125, 211, 252, 0.42), rgba(125, 211, 252, 0.42)) left bottom / 1px 0.85rem no-repeat,
+    linear-gradient(rgba(125, 211, 252, 0.42), rgba(125, 211, 252, 0.42)) right bottom / 0.85rem 1px no-repeat,
+    linear-gradient(rgba(125, 211, 252, 0.42), rgba(125, 211, 252, 0.42)) right bottom / 1px 0.85rem no-repeat;
+  opacity: 0;
+  transform: scale(1.05);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+  pointer-events: none;
+}
+
+.loader-word.is-complete::before,
+.loader-word.is-complete::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.loader-letter {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border: 0;
+  color: rgba(226, 247, 255, 0.82);
+  background: transparent;
+  transition:
+    color 120ms ease,
+    opacity 120ms ease,
+    text-shadow 120ms ease;
+}
+
+.loader-letter.is-placeholder {
+  opacity: 0.13;
+}
+
+.loader-letter.is-active {
+  color: rgba(250, 252, 255, 0.88);
+  text-shadow: 0 0 5px rgba(125, 211, 252, 0.32);
+}
+
+.loader-letter.is-locked {
+  color: rgba(226, 247, 255, 0.9);
+  text-shadow: 0 0 4px rgba(125, 211, 252, 0.22);
+}
+
+/* Legacy orbit loader styles for the commented rollback markup in each page's loader. */
 .loader-frame {
   position: relative;
   width: 6.5rem;
@@ -188,6 +338,22 @@ body[data-page="home"] .circuit-bg::before {
   50% {
     transform: scale(1);
     opacity: 1;
+  }
+}
+
+@keyframes loaderSincDraw {
+  0% {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0;
+  }
+
+  8% {
+    opacity: 0.34;
+  }
+
+  100% {
+    clip-path: inset(0 0 0 0);
+    opacity: 0.32;
   }
 }
 
@@ -288,10 +454,16 @@ details summary::-webkit-details-marker {
   [data-reveal],
   .slide,
   .loader,
+  .loader::before,
   .loader-core,
   .loader-orbit,
   #site-shell {
     animation: none !important;
     transition: none !important;
+  }
+
+  .loader::before {
+    clip-path: inset(0);
+    opacity: 0.2;
   }
 }

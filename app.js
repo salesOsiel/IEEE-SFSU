@@ -6,6 +6,16 @@
   }
 
   const currentFile = getCurrentFile();
+  // Loader speed controls: these values keep the scramble plus drop exit near 1.2 seconds.
+  const loaderScrambleSettings = {
+    targetText: "IEEE",
+    placeholder: "·",
+    randomCharacters: "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789",
+    scrambleCycles: 3, // Number of random swaps before each letter locks in.
+    tickMs: 24, // Lower = faster scrambling.
+    letterPauseMs: 24, // Pause after one letter finishes before moving to the next.
+    completePauseMs: 160 // Pause after "IEEE" is complete before revealing the page.
+  };
 
   function getCurrentFile() {
     const path = window.location.pathname;
@@ -1130,9 +1140,11 @@
     }
 
     let hasRevealed = false;
+    let isDomReady = document.readyState !== "loading";
+    let isLoaderReady = false;
 
     function revealSite() {
-      if (hasRevealed) {
+      if (hasRevealed || !isDomReady || !isLoaderReady) {
         return;
       }
 
@@ -1140,16 +1152,119 @@
       window.setTimeout(function () {
         loader.classList.add("is-hidden");
         siteShell.classList.remove("opacity-0");
-      }, 750);
+      }, 0);
     }
 
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", revealSite, { once: true });
-    } else {
+    function markDomReady() {
+      isDomReady = true;
       revealSite();
     }
 
-    window.addEventListener("load", revealSite, { once: true });
+    runLoaderScramble(loader).then(function () {
+      isLoaderReady = true;
+      revealSite();
+    });
+
+    if (isDomReady) {
+      markDomReady();
+    } else {
+      document.addEventListener("DOMContentLoaded", markDomReady, { once: true });
+    }
+  }
+
+  function runLoaderScramble(loader) {
+    const wordTarget = loader.querySelector("[data-loader-word]");
+    const settings = loaderScrambleSettings;
+    const targetText = settings.targetText;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!wordTarget) {
+      return Promise.resolve();
+    }
+
+    wordTarget.innerHTML = "";
+    wordTarget.classList.remove("is-complete");
+
+    const letterCells = targetText.split("").map(function () {
+      const cell = document.createElement("span");
+      cell.className = "loader-letter";
+      cell.setAttribute("aria-hidden", "true");
+      wordTarget.appendChild(cell);
+      return cell;
+    });
+
+    if (reducedMotion) {
+      letterCells.forEach(function (cell, index) {
+        cell.textContent = targetText.charAt(index);
+        cell.classList.add("is-locked");
+      });
+      wordTarget.classList.add("is-complete");
+      return Promise.resolve();
+    }
+
+    return new Promise(function (resolve) {
+      let position = 0;
+      let cycle = 0;
+
+      function randomCharacter() {
+        const index = Math.floor(Math.random() * settings.randomCharacters.length);
+        return settings.randomCharacters.charAt(index);
+      }
+
+      function renderWord(activeCharacter) {
+        letterCells.forEach(function (cell, index) {
+          cell.classList.remove("is-active", "is-locked", "is-placeholder");
+
+          if (index < position) {
+            cell.textContent = targetText.charAt(index);
+            cell.classList.add("is-locked");
+            return;
+          }
+
+          if (index === position) {
+            cell.textContent = activeCharacter;
+            cell.classList.add("is-active");
+            return;
+          }
+
+          cell.textContent = settings.placeholder;
+          cell.classList.add("is-placeholder");
+        });
+      }
+
+      function settleCurrentLetter() {
+        renderWord(targetText.charAt(position));
+        position += 1;
+        cycle = 0;
+
+        if (position >= targetText.length) {
+          letterCells.forEach(function (cell, index) {
+            cell.textContent = targetText.charAt(index);
+            cell.classList.remove("is-active", "is-placeholder");
+            cell.classList.add("is-locked");
+          });
+          wordTarget.classList.add("is-complete");
+          window.setTimeout(resolve, settings.completePauseMs);
+          return;
+        }
+
+        window.setTimeout(tick, settings.letterPauseMs);
+      }
+
+      function tick() {
+        if (cycle >= settings.scrambleCycles) {
+          settleCurrentLetter();
+          return;
+        }
+
+        renderWord(randomCharacter());
+        cycle += 1;
+        window.setTimeout(tick, settings.tickMs);
+      }
+
+      renderWord(settings.placeholder);
+      window.setTimeout(tick, settings.tickMs);
+    });
   }
 
   function highlightHashTarget() {
