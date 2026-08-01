@@ -60,7 +60,7 @@
 
           <div class="hidden items-center gap-3 lg:flex">
             <a
-              href="membership.html"
+              href="https://discord.gg/C6fNY8T6uz"
               class="rounded-full border border-sfsu-400/25 bg-sfsu-500/15 px-5 py-2.5 text-sm font-semibold text-sfsu-100 transition hover:border-sfsu-300/40 hover:bg-sfsu-500/25"
             >
               Join IEEE
@@ -85,7 +85,7 @@
           <nav aria-label="Mobile" class="grid gap-3">
             ${mobileLinks}
             <a
-              href="membership.html"
+              href="https://discord.gg/C6fNY8T6uz"
               class="mt-2 rounded-2xl bg-ieee-700 px-4 py-3 text-center text-sm font-semibold text-white transition hover:bg-ieee-600"
             >
               Join IEEE

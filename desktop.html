@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IEEE SF State - Hyprland Desktop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind-theme.js"></script>
+    <link rel="stylesheet" href="desktop.css">
+</head>
+<body class="overflow-hidden">
+    <!-- Matrix Rain Canvas Background -->
+    <canvas id="matrix-rain"></canvas>
+    
+    <!-- Desktop Background with IEEE Logo -->
+    <div class="desktop-background">
+        <div class="ieee-watermark">
+            <svg viewBox="0 0 100 100" class="ieee-logo">
+                <!-- IEEE-style diamond logo -->
+                <polygon points="50,5 95,50 50,95 5,50" fill="none" stroke="currentColor" stroke-width="2"/>
+                <text x="50" y="55" text-anchor="middle" font-size="12" font-weight="bold" fill="currentColor">IEEE</text>
+            </svg>
+        </div>
+    </div>
+    
+    <!-- Waybar Top Navigation -->
+    <nav class="waybar">
+        <div class="waybar-left">
+            <div class="brand-section">
+                <a href="#" class="brand-link" data-workspace="home">
+                    <span class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-slate-900/90 p-1 shadow-panel">
+                        <img src="ieee-logo.svg" alt="IEEE at SFSU logo" class="h-full w-full rounded-lg object-cover" />
+                    </span>
+                    <span class="flex flex-col">
+                        <span class="text-xs font-semibold uppercase tracking-[0.22em] text-white">IEEE at SFSU</span>
+                        <span class="text-[10px] text-slate-400">Hardware, robotics, research</span>
+                    </span>
+                </a>
+            </div>
+            <div class="navigation-container" id="waybar-navigation"></div>
+        </div>
+        <div class="waybar-right">
+            <div class="battery-module" id="battery">
+                <span class="battery-icon">⚡</span>
+                <span class="battery-level">100%</span>
+            </div>
+            <div class="location-badge">SF State</div>
+            <div class="clock-module" id="clock">
+                <span class="time-display">00:00:00</span>
+                <div class="calendar-tooltip" id="calendar-tooltip"></div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Window Container -->
+    <div class="window-container" id="window-container"></div>
+    
+    <script src="content.js"></script>
+    <script src="desktop.js"></script>
+</body>
+</html>

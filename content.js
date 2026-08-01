@@ -11,9 +11,9 @@ window.siteContent = {
     location: "Engineering Building, Room TBD",
     meetingTime: "Wednesdays at 4:30 PM",
     social: [
-      { label: "Instagram", href: "#" },
+      { label: "Instagram", href: "https://www.instagram.com/ieeesfsu/" },
       { label: "LinkedIn", href: "#" },
-      { label: "Discord", href: "#" }
+      { label: "Discord", href: "https://discord.gg/C6fNY8T6uz" }
     ],
     footerLinks: [
       { label: "Home", href: "index.html" },
@@ -39,9 +39,9 @@ window.siteContent = {
     {
       label: "Past Events",
       links: [
-        { label: "24-25", href: "past-events.html#year-24-25" },
-        { label: "25-26", href: "past-events.html#year-25-26" },
-        { label: "26-27", href: "past-events.html#year-26-27" }
+        { label: "2024-25", href: "past-events.html#year-24-25" },
+        { label: "2025-26", href: "past-events.html#year-25-26" },
+        { label: "2026-27", href: "past-events.html#year-26-27" }
       ]
     }
   ],
@@ -303,7 +303,7 @@ window.siteContent = {
   archiveYears: [
     {
       id: "year-24-25",
-      year: "24-25",
+      year: "2024-25",
       summary: "Placeholder archive area for chapter recaps, photos, and simple year-by-year highlights.",
       events: [
         {
@@ -320,7 +320,7 @@ window.siteContent = {
     },
     {
       id: "year-25-26",
-      year: "25-26",
+      year: "2025-26",
       summary: "Use this section for old flyers, event recaps, competition photos, or leadership transitions.",
       events: [
         {
@@ -337,7 +337,7 @@ window.siteContent = {
     },
     {
       id: "year-26-27",
-      year: "26-27",
+      year: "2026-27",
       summary: "Use this current-year archive section for events once they have passed.",
       events: [
         {
