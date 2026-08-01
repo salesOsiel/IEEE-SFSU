@@ -1010,6 +1010,97 @@
     counters.forEach((counter) => observer.observe(counter));
   }
 
+  function initDigitalRain() {
+    const background = document.querySelector(".circuit-bg");
+
+    if (!background || background.querySelector(".page-digital-rain")) {
+      return;
+    }
+
+    const canvas = document.createElement("canvas");
+    canvas.className = "page-digital-rain";
+    canvas.setAttribute("aria-hidden", "true");
+    background.appendChild(canvas);
+
+    const ctx = canvas.getContext("2d");
+
+    if (!ctx) {
+      return;
+    }
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const columnWidth = 18;
+    const fontSize = 16;
+    const chars = "IEEE SFSU 0101010110 <>[]{} / +-*";
+    let drops = [];
+    let animationFrameId;
+    let lastFrame = 0;
+
+    function resizeCanvas() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      drops = Array.from({ length: Math.ceil(width / columnWidth) }, () => Math.random() * -36);
+      drawFrame();
+    }
+
+    function drawFrame() {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+
+      ctx.fillStyle = "rgba(2, 6, 23, 0.14)";
+      ctx.fillRect(0, 0, width, height);
+      ctx.font = `${fontSize}px "Fira Code", "JetBrains Mono", monospace`;
+      ctx.textBaseline = "top";
+
+      for (let i = 0; i < drops.length; i++) {
+        const x = i * columnWidth;
+        const y = drops[i] * fontSize;
+        const text = chars.charAt(Math.floor(Math.random() * chars.length));
+        const isLead = Math.random() > 0.968;
+
+        ctx.fillStyle = isLead
+          ? "rgba(226, 232, 240, 0.82)"
+          : `rgba(${Math.random() > 0.66 ? "125, 211, 252" : "16, 134, 214"}, ${0.32 + Math.random() * 0.22})`;
+        ctx.fillText(text, x, y);
+
+        if (y > height && Math.random() > 0.965) {
+          drops[i] = Math.random() * -28;
+        } else {
+          drops[i] += 0.72 + Math.random() * 0.38;
+        }
+      }
+    }
+
+    function animate(timestamp) {
+      if (timestamp - lastFrame > 46) {
+        drawFrame();
+        lastFrame = timestamp;
+      }
+
+      animationFrameId = window.requestAnimationFrame(animate);
+    }
+
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    if (!reducedMotion) {
+      animationFrameId = window.requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("pagehide", function () {
+      if (animationFrameId) {
+        window.cancelAnimationFrame(animationFrameId);
+      }
+    });
+  }
+
   function initLoader() {
     const loader = document.getElementById("loader");
     const siteShell = document.getElementById("site-shell");
@@ -1063,6 +1154,7 @@
   }
 
   function init() {
+    initDigitalRain();
     renderHeader();
     renderFooter();
     renderAboutCopy();

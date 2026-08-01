@@ -41,7 +41,7 @@ tailwind.config = {
         glow: "0 0 0 1px rgba(125, 211, 252, 0.12), 0 28px 80px -34px rgba(16, 134, 214, 0.42)"
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"]
+        sans: ["Fira Code", "JetBrains Mono", "Cascadia Code", "Consolas", "Courier New", "monospace"]
       },
       backgroundImage: {
         "hero-mesh":
