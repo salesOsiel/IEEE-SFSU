@@ -11,16 +11,16 @@ window.siteContent = {
     location: "Engineering Building, Room TBD",
     meetingTime: "Wednesdays at 4:30 PM",
     social: [
-      { label: "Instagram", href: "#" },
-      { label: "LinkedIn", href: "#" },
-      { label: "Discord", href: "#" }
+      { label: "Instagram", href: "https://www.instagram.com/ieeesfsu/"},
+      { label: "LinkedIn", href: "https://www.linkedin.com/company/sfsu-ieee" },
+      { label: "Discord", href: "https://discord.com/invite/zUatMA5DYS" }
     ],
     footerLinks: [
       { label: "Home", href: "index.html" },
       { label: "About", href: "index.html#about" },
       { label: "Event Calendar", href: "event-calendar.html" },
       { label: "Officers", href: "officers.html" },
-      { label: "Membership", href: "membership.html" }
+      { label: "Support/Donation", href: "support.html" }
     ]
   },
   navigation: [
@@ -33,15 +33,15 @@ window.siteContent = {
         { label: "FAQ", href: "index.html#faq" }
       ]
     },
-    { label: "Membership", href: "membership.html" },
     { label: "Officers", href: "officers.html" },
     { label: "Event Calendar", href: "event-calendar.html" },
+    { label: "Support/Donate", href: "support.html" },
     {
       label: "Past Events",
       links: [
-        { label: "24-25", href: "past-events.html#year-24-25" },
-        { label: "25-26", href: "past-events.html#year-25-26" },
-        { label: "26-27", href: "past-events.html#year-26-27" }
+        { label: "2024-25", href: "past-events.html#year-24-25" },
+        { label: "2025-26", href: "past-events.html#year-25-26" },
+        { label: "2026-27", href: "past-events.html#year-26-27" }
       ]
     }
   ],
@@ -96,10 +96,11 @@ window.siteContent = {
     }
   ],
   chapterStats: [
-    { value: 25, suffix: "+", label: "active members" },
-    { value: 12, suffix: "+", label: "planned events" },
-    { value: 4, suffix: "", label: "technical lanes" },
-    { value: 6, suffix: "+", label: "industry or research touchpoints" }
+    { value: 40, suffix: "+", label: "active members" },
+    // { value: 12, suffix: "+", label: "planned events" },
+    { suffix: "", label: "planned events" },
+    { value: 200, suffix: "+", label: "alumni connections" },
+    { value: 10, suffix: "+", label: "research labs" }
   ],
   pillars: [
     {
@@ -182,42 +183,60 @@ window.siteContent = {
   ],
   membershipBenefits: [
     {
-      title: "Technical confidence",
-      description: "Build comfort with hardware, embedded systems, robotics workflows, and engineering collaboration."
+      title: "Discord is the front door",
+      description: "Join the chapter Discord to see announcements, ask questions, and find the next meeting or build night."
     },
     {
-      title: "Community support",
-      description: "Meet students with similar interests and keep a reliable place to ask questions, learn, and build."
+      title: "Events make you a member",
+      description: "Show up to meetings, workshops, socials, and project sessions. Local involvement is intentionally low-friction."
     },
     {
-      title: "Professional growth",
-      description: "Use the chapter for resume projects, alumni advice, guest speakers, and career-oriented events."
+      title: "No required subscription",
+      description: "You do not need paid national IEEE membership to participate in IEEE at SFSU chapter activities."
     },
     {
-      title: "Leadership room",
-      description: "As the chapter grows, members can lead projects, workshops, outreach, and officer teams."
+      title: "National IEEE is optional",
+      description: "Students can choose national IEEE membership later if they want extra benefits, publications, or conference resources."
     }
   ],
   joinSteps: [
     {
       step: "1",
-      title: "Join the interest list",
-      description: "Replace this with your actual Google Form, Linktree, or campus organization portal link."
+      title: "Join the Discord",
+      description: "Use this button for your real Discord invite once it is ready. This is the easiest way to follow chapter updates."
     },
     {
       step: "2",
-      title: "Attend a meeting",
-      description: "Come to an intro night, open lab, or social event to see the chapter culture in person."
+      title: "Attend an event",
+      description: "Come to a general meeting, workshop, project night, or partner event. New students can start at any time."
     },
     {
       step: "3",
-      title: "Choose your lane",
-      description: "Members can lean into hardware, robotics, research, outreach, or simply show up and explore first."
+      title: "Pick your pace",
+      description: "You can join casually, help with one project, or grow toward officer work. There is no pressure to know everything."
     },
     {
       step: "4",
       title: "Stay connected",
-      description: "Use Discord, email, or Instagram to keep up with meetings, workshops, and chapter updates."
+      description: "Keep checking Discord and the Event Calendar so you do not miss meetings, workshops, and opportunities."
+    }
+  ],
+  supportWays: [
+    {
+      title: "Donate parts and materials",
+      description: "Help students get hands-on experience with boards, sensors, motors, tools, lab supplies, and prototyping materials."
+    },
+    {
+      title: "Sponsor workshops",
+      description: "Support food, components, printed materials, guest speaker logistics, or beginner-friendly technical sessions."
+    },
+    {
+      title: "Support student travel",
+      description: "Help members attend conferences, competitions, showcases, research events, and professional development programs."
+    },
+    {
+      title: "Mentor or speak",
+      description: "Share industry, research, graduate school, or project advice with students exploring engineering pathways."
     }
   ],
   faqItems: [
@@ -231,7 +250,7 @@ window.siteContent = {
     },
     {
       question: "Do I need national IEEE membership right away?",
-      answer: "Not necessarily. Many chapters allow students to start locally and decide later whether they want the additional IEEE benefits."
+      answer: "No. To join IEEE at SFSU locally, join the Discord and attend events. A paid national IEEE membership is optional if you want extra IEEE benefits later."
     },
     {
       question: "What should go on this page long term?",

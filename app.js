@@ -494,6 +494,30 @@
       .join("");
   }
 
+  function renderSupportWays() {
+    const target = document.getElementById("support-ways");
+
+    if (!target) {
+      return;
+    }
+
+    target.innerHTML = (content.supportWays || [])
+      .map(
+        (item, index) => `
+          <article class="rounded-[1.8rem] border border-white/10 bg-slate-900/75 p-6 shadow-panel" data-reveal>
+            <p class="text-xs font-semibold uppercase tracking-[0.22em] ${
+              index % 2 === 0 ? "text-signal-300" : "text-ieee-200"
+            }">
+              Support path ${index + 1}
+            </p>
+            <h3 class="mt-3 text-xl font-bold text-white">${item.title}</h3>
+            <p class="mt-3 text-sm leading-7 text-slate-300">${item.description}</p>
+          </article>
+        `
+      )
+      .join("");
+  }
+
   function renderHeroSlideshow() {
     const target = document.getElementById("hero-slideshow");
 
@@ -1302,6 +1326,7 @@
     renderFaq();
     renderMembershipBenefits();
     renderJoinSteps();
+    renderSupportWays();
     renderEventsPage();
     renderGoogleCalendar();
     renderOfficers();

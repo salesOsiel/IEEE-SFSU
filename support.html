@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IEEE at SFSU | Support/Donation</title>
+    <meta
+      name="description"
+      content="Support IEEE at San Francisco State University through donations, sponsorships, mentorship, and in-kind materials."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind-theme.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body data-page="support" class="min-h-screen overflow-x-hidden bg-slate-950 text-slate-100">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <div id="loader" class="loader" aria-live="polite" aria-label="Loading IEEE at SFSU">
+      <div class="loader-terminal">
+        <div class="loader-word" data-loader-word aria-label="Generating IEEE">----</div>
+      </div>
+      <!-- Previous orbit loader, kept for easy rollback.
+      <div class="loader-frame">
+        <div class="loader-core"></div>
+        <div class="loader-orbit"></div>
+        <div class="loader-orbit loader-orbit-delayed"></div>
+      </div>
+      <p class="loader-text">Powering up IEEE at SFSU</p>
+      -->
+    </div>
+
+    <div id="site-shell" class="relative opacity-0 transition-opacity duration-500">
+      <div class="circuit-bg" aria-hidden="true"></div>
+      <header data-site-header></header>
+
+      <main id="main-content" class="pb-24">
+        <section class="mx-auto max-w-7xl px-6 pb-12 pt-16 lg:px-8 lg:pt-24">
+          <div class="grid gap-10 lg:grid-cols-[1fr_0.9fr] lg:items-center">
+            <div data-reveal>
+              <p class="text-sm font-semibold uppercase tracking-[0.24em] text-sfsu-300">Support/Donation</p>
+              <h1 class="mt-4 text-4xl font-black text-white sm:text-5xl">Support hands-on engineering at SF State.</h1>
+              <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
+                Donations, sponsorships, parts, and mentorship help IEEE at SFSU run workshops, build projects, host speakers, and reduce barriers for students exploring electrical and computer engineering.
+              </p>
+              <div class="mt-8 flex flex-wrap gap-4">
+                <a href="#" class="rounded-full bg-ieee-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-ieee-800">
+                  Donation link placeholder
+                </a>
+                <a href="mailto:ieee@sfsu.edu" class="rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition hover:border-sfsu-300/40 hover:bg-sfsu-500/10">
+                  Contact the chapter
+                </a>
+              </div>
+            </div>
+
+            <figure class="overflow-hidden rounded-[2rem] border border-white/10 bg-slate-900/75 shadow-panel" data-reveal>
+              <img
+                src="https://placehold.co/1200x900/725400/f8fafc?text=Support+IEEE+SFSU"
+                alt="Placeholder image labeled Support IEEE SFSU."
+                class="h-full w-full object-cover"
+              />
+            </figure>
+          </div>
+        </section>
+
+        <section class="mx-auto max-w-7xl px-6 py-8 lg:px-8">
+          <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-4" id="support-ways"></div>
+        </section>
+
+        <section class="mx-auto max-w-7xl px-6 py-12 lg:px-8">
+          <div class="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
+            <article class="rounded-[2rem] border border-white/10 bg-slate-900/75 p-8 shadow-panel" data-reveal>
+              <p class="text-sm font-semibold uppercase tracking-[0.24em] text-ieee-200">Where support goes</p>
+              <h2 class="mt-4 text-3xl font-bold text-white">Small contributions can unlock real build time.</h2>
+              <p class="mt-6 text-base leading-8 text-slate-300">
+                Funding can support microcontrollers, sensors, motors, tools, soldering supplies, workshop food, printing, event materials, travel support, and student project showcases.
+              </p>
+            </article>
+
+            <div class="grid gap-5" data-reveal>
+              <article class="rounded-[1.8rem] border border-white/10 bg-slate-900/75 p-6 shadow-panel">
+                <p class="text-xs font-semibold uppercase tracking-[0.22em] text-sfsu-300">For companies</p>
+                <h3 class="mt-3 text-xl font-bold text-white">Sponsor learning and recruiting touchpoints.</h3>
+                <p class="mt-3 text-sm leading-7 text-slate-300">
+                  Use this area for sponsorship packages, speaker nights, resume reviews, lab tours, mentorship, or industry project prompts.
+                </p>
+              </article>
+              <article class="rounded-[1.8rem] border border-white/10 bg-slate-900/75 p-6 shadow-panel">
+                <p class="text-xs font-semibold uppercase tracking-[0.22em] text-ieee-200">For alumni and friends</p>
+                <h3 class="mt-3 text-xl font-bold text-white">Give materials, advice, or project feedback.</h3>
+                <p class="mt-3 text-sm leading-7 text-slate-300">
+                  In-kind support is welcome too. Parts, tools, project mentorship, and career advice can be just as helpful as money.
+                </p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="mx-auto max-w-7xl px-6 py-12 lg:px-8">
+          <div class="rounded-[2rem] border border-white/10 bg-slate-950 px-8 py-10 text-white shadow-glow" data-reveal>
+            <div class="grid gap-8 lg:grid-cols-[1fr_0.9fr] lg:items-end">
+              <div>
+                <p class="text-sm font-semibold uppercase tracking-[0.24em] text-signal-300">Want to help?</p>
+                <h2 class="mt-3 text-3xl font-bold sm:text-4xl">Start with a conversation.</h2>
+                <p class="mt-4 max-w-2xl text-base leading-8 text-slate-300">
+                  Replace these placeholders once the chapter has an official donation link, sponsorship packet, or campus funding process.
+                </p>
+              </div>
+              <div class="flex flex-wrap gap-4 lg:justify-end">
+                <a href="#" class="rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-100">
+                  Donation form placeholder
+                </a>
+                <a href="membership.html" class="rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
+                  Join IEEE
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer data-site-footer></footer>
+    </div>
+
+    <script src="content.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
