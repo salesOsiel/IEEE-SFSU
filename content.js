@@ -46,33 +46,8 @@ window.siteContent = {
     }
   ],
   aboutCopy:
-    "IEEE's core purpose is to foster technological innovation and excellence for the benefit of humanity. IEEE at SF State is the student chapter of IEEE, an international organization. In addition to upholding the mission of the global organization, IEEE at SF State supports the study of electrical and computer engineering. The chapter encourages scholarship, social connection, and collaboration through research and hands-on practice, strengthens connections between students and the technology industry, and advances fields related to electronics and computing.",
-  heroSlides: [
-    {
-      title: "Prototype Bench",
-      caption: "Swap this placeholder for a chapter lab photo, soldering session, or PCB workshop shot.",
-      image: "https://placehold.co/1200x820/0a2a40/f8fafc?text=Prototype+Bench",
-      alt: "Placeholder image labeled Prototype Bench."
-    },
-    {
-      title: "Robotics Build Team",
-      caption: "Use the slideshow for team photos, competition robots, or outreach demos.",
-      image: "https://placehold.co/1200x820/3d1846/f8fafc?text=Robotics+Build+Team",
-      alt: "Placeholder image labeled Robotics Build Team."
-    },
-    {
-      title: "Research Poster Night",
-      caption: "This area is intentionally image-first to match the SHPE-style rotating gallery feel.",
-      image: "https://placehold.co/1200x820/004c79/f8fafc?text=Research+Poster+Night",
-      alt: "Placeholder image labeled Research Poster Night."
-    },
-    {
-      title: "Community Demo Day",
-      caption: "Replace with chapter showcases, officer photos, guest speaker sessions, or club fairs.",
-      image: "https://placehold.co/1200x820/725400/f8fafc?text=Community+Demo+Day",
-      alt: "Placeholder image labeled Community Demo Day."
-    }
-  ],
+    "IEEE’s core purpose is to foster technological innovation and excellence for the benefit of humanity. IEEE at SF State is the university’s student chapter of this global organization. In addition to advancing IEEE’s broader mission, our chapter supports students in electrical and computer engineering by fostering community, encouraging collaboration through research and hands-on projects, and building connections between students and the technology industry.",
+  heroSlides: (window.sitePictures && window.sitePictures.homepage) || [],
   quickFacts: [
     {
       label: "Weekly rhythm",

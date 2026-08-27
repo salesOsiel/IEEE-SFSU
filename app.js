@@ -537,7 +537,7 @@
                 <figure class="slide absolute inset-0 ${index === 0 ? "is-active" : ""}" data-slide="${index}" aria-hidden="${index === 0 ? "false" : "true"}">
                   <img src="${slide.image}" alt="${slide.alt}" class="h-full w-full object-cover opacity-85" />
                   <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent p-6 text-white sm:p-8">
-                    <p class="text-xs font-semibold uppercase tracking-[0.24em] text-signal-300">Homepage slideshow</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.24em] text-signal-300"></p>
                     <h2 class="mt-3 text-2xl font-bold sm:text-3xl">${slide.title}</h2>
                     <p class="mt-3 max-w-xl text-sm leading-7 text-slate-200">${slide.caption}</p>
                   </figcaption>
