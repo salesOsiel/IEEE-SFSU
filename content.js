@@ -33,7 +33,8 @@ window.siteContent = {
         { label: "FAQ", href: "index.html#faq" }
       ]
     },
-    { label: "Officers", href: "officers.html" },
+    // Disabled until the officers page has real content — remove `disabled` to re-enable.
+    { label: "Officers", href: "officers.html", disabled: true },
     { label: "Event Calendar", href: "event-calendar.html" },
     { label: "Support/Donate", href: "support.html" },
     {
@@ -72,7 +73,7 @@ window.siteContent = {
   ],
   chapterStats: [
     { value: 40, suffix: "+", label: "active members" },
-    { value: 2, suffix: "", label: "planned events" },
+    { value: 4, suffix: "", label: "planned events" },
     { value: 200, suffix: "+", label: "alumni connections" },
     { value: 10, suffix: "+", label: "research labs" }
   ],
@@ -138,8 +139,8 @@ window.siteContent = {
       location: "SEIC 400",
       description: "An open session for students interested in electrical systems, boat design, and joining the Solar Regatta competition team.",
       details: "Meeting to discuss team building and beginning designs for new systems. Solar Regatta meets every Thursday in SEIC 400 — same time and room each week.",
-      image: "https://placehold.co/1200x720/3d1846/f8fafc?text=Solar+Regatta+General+Meeting",
-      alt: "Solar Regatta General Meeting.",
+      image: "images/solar-gators-logo.jpg",
+      alt: "Solar Gators logo.",
       discordLink: "https://discord.gg/G2dvwZGfUD"
     }
   ],

@@ -196,6 +196,15 @@
   }
 
   function renderDesktopNavItem(item) {
+    if (item.disabled) {
+      return `
+        <span class="flex cursor-not-allowed items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium text-slate-500" aria-disabled="true" title="Coming soon">
+          ${item.label}
+          <span class="rounded-full bg-white/5 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">Soon</span>
+        </span>
+      `;
+    }
+
     if (!item.links) {
       const active = isActiveHref(item.href);
       const classes = active
@@ -248,6 +257,15 @@
   }
 
   function renderMobileNavItem(item) {
+    if (item.disabled) {
+      return `
+        <span class="flex cursor-not-allowed items-center justify-between rounded-2xl border border-white/10 bg-slate-900/40 px-4 py-3 text-sm text-slate-500" aria-disabled="true">
+          <span>${item.label}</span>
+          <span class="rounded-full bg-white/5 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">Soon</span>
+        </span>
+      `;
+    }
+
     if (!item.links) {
       const active = isActiveHref(item.href);
       return `
