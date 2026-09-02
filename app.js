@@ -55,6 +55,81 @@
       .replace(/'/g, "&#039;");
   }
 
+  // event.startISO/endISO are local time, no offset (e.g. "2026-09-14T18:00:00").
+  function buildGoogleCalendarUrl(event) {
+    const toGoogleDate = (iso) => iso.replace(/[-:]/g, "");
+    const params = new URLSearchParams({
+      action: "TEMPLATE",
+      text: event.title,
+      dates: `${toGoogleDate(event.startISO)}/${toGoogleDate(event.endISO)}`,
+      details: event.details || event.description || "",
+      location: event.location || "",
+      ctz: (content.googleCalendar && content.googleCalendar.timeZone) || "America/Los_Angeles"
+    });
+    return `https://calendar.google.com/calendar/render?${params}`;
+  }
+
+  function buildOutlookCalendarUrl(event) {
+    const params = new URLSearchParams({
+      path: "/calendar/action/compose",
+      rru: "addevent",
+      subject: event.title,
+      startdt: event.startISO,
+      enddt: event.endISO,
+      location: event.location || "",
+      body: event.details || event.description || ""
+    });
+    return `https://outlook.live.com/calendar/0/deeplink/compose?${params}`;
+  }
+
+  // Dev note: event action buttons are data-driven per event object:
+  //   - event.discordLink set -> a single button linking straight to that Discord.
+  //   - otherwise -> the registerLink/ctaText button, plus an "Add to calendar" dropdown
+  //     (Google Calendar + Outlook) when event.startISO/endISO are set, or a
+  //     "Get involved" link to membership.html when they are not.
+  function renderEventActions(event) {
+    if (event.discordLink) {
+      return `
+        <a href="${event.discordLink}" target="_blank" rel="noopener" class="rounded-full bg-ieee-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-ieee-800">
+          Join the Discord
+        </a>
+      `;
+    }
+
+    const secondaryAction =
+      event.startISO && event.endISO
+        ? `
+          <details class="group relative">
+            <summary class="flex list-none cursor-pointer items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:border-ieee-300/40 hover:bg-white/10">
+              <span>Add to calendar</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition group-open:rotate-180" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.51a.75.75 0 01-1.08 0l-4.25-4.51a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+              </svg>
+            </summary>
+            <div class="mt-2 grid gap-1 rounded-2xl border border-white/10 bg-slate-950/95 p-2 shadow-panel sm:absolute sm:left-0 sm:top-full sm:z-10 sm:w-56">
+              <a href="${buildGoogleCalendarUrl(event)}" target="_blank" rel="noopener" class="rounded-xl px-4 py-2 text-sm text-slate-200 transition hover:bg-white/10 hover:text-white">
+                Google Calendar
+              </a>
+              <a href="${buildOutlookCalendarUrl(event)}" target="_blank" rel="noopener" class="rounded-xl px-4 py-2 text-sm text-slate-200 transition hover:bg-white/10 hover:text-white">
+                Outlook
+              </a>
+            </div>
+          </details>
+        `
+        : `
+          <a href="membership.html" class="rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:border-ieee-300/40 hover:bg-white/10">
+            Get involved
+          </a>
+        `;
+
+    return `
+      <a href="${event.registerLink}" class="rounded-full bg-ieee-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-ieee-800">
+        ${event.ctaText}
+      </a>
+      ${secondaryAction}
+    `;
+  }
+
   function renderHeader() {
     const header = document.querySelector("[data-site-header]");
 
@@ -728,12 +803,7 @@
               </div>
               <p class="mt-5 rounded-[1.4rem] bg-slate-950/70 p-4 text-sm leading-7 text-slate-300">${event.details}</p>
               <div class="mt-6 flex flex-wrap gap-3">
-                <a href="${event.registerLink}" class="rounded-full bg-ieee-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-ieee-800">
-                  ${event.ctaText}
-                </a>
-                <a href="membership.html" class="rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:border-ieee-300/40 hover:bg-white/10">
-                  Get involved
-                </a>
+                ${renderEventActions(event)}
               </div>
             </article>
           `

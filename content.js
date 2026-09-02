@@ -98,26 +98,9 @@ window.siteContent = {
       details: ["Networking", "Mentorship", "Leadership"]
     }
   ],
-  featureStories: [
-    {
-      label: "Hands-on momentum",
-      title: "Build nights that feel active, not overwhelming",
-      description: "Use this section for short chapter narratives like open lab sessions, soldering intros, or quick project updates.",
-      href: "membership.html"
-    },
-    {
-      label: "Research and industry",
-      title: "Make technical growth visible",
-      description: "Highlight faculty conversations, alumni panels, or project showcases without adding too much homepage clutter.",
-      href: "event-calendar.html"
-    },
-    {
-      label: "SFSU pride",
-      title: "Keep the tone polished but rooted on campus",
-      description: "The palette blends IEEE blue with stronger SFSU purple and gold accents for a cleaner chapter identity.",
-      href: "officers.html"
-    }
-  ],
+  // Dev note: featureStories feeds the homepage #spotlight-grid section (see index.html).
+  // Add { label, title, description, href } objects here to bring that section back.
+  featureStories: [],
   eventFilters: ["IEEE", "Solar Regatta", "ASME", "Chomp City", "Research"],
   googleCalendar: {
     apiKey: "",
@@ -127,17 +110,20 @@ window.siteContent = {
   },
   upcomingEvents: [
     {
-      slug: "ieee-general-meeting",
-      title: "IEEE General Meeting",
+      slug: "sandisk-workshop",
+      title: "SanDisk Workshop",
       category: "IEEE",
-      date: "August 27, 2026",
-      time: "4:30 PM to 5:30 PM",
+      date: "September 14, 2026",
+      time: "6:00 PM to 7:30 PM",
+      // Local start/end used to build "Add to calendar" links — keep in sync with date/time above.
+      startISO: "2026-09-14T18:00:00",
+      endISO: "2026-09-14T19:30:00",
       location: "Engineering Building, Room TBD",
-      description: "A placeholder chapter meeting for announcements, project updates, and member planning.",
-      details: "Replace this with the next IEEE meeting details once the semester schedule is confirmed.",
-      image: "https://placehold.co/1200x720/004c79/f8fafc?text=IEEE+General+Meeting",
-      alt: "Placeholder image labeled IEEE General Meeting.",
-      ctaText: "Meeting details placeholder",
+      description: "Learn what recruiters and engineers actually look for, and get your resume reviewed live by SanDisk professionals.",
+      details: "Includes a live resume review, small-group / 1-on-1 resume reviews, and a Q&A with career advice from SanDisk recruiters and engineers.",
+      image: "images/sandisk-logo.jpg",
+      alt: "SanDisk logo.",
+      ctaText: "Event details placeholder",
       registerLink: "#"
     },
     {
@@ -146,13 +132,15 @@ window.siteContent = {
       category: "Solar Regatta",
       date: "September 3, 2026",
       time: "12:30 PM to 3:00 PM",
+      // Local start/end used to build "Add to calendar" links — keep in sync with date/time above.
+      startISO: "2026-09-03T12:30:00",
+      endISO: "2026-09-03T15:00:00",
       location: "SEIC 400",
       description: "An open session for students interested in electrical systems, boat design, and joining the Solar Regatta competition team.",
       details: "Meeting to discuss team building and beginning designs for new systems. Solar Regatta meets every Thursday in SEIC 400 — same time and room each week.",
       image: "https://placehold.co/1200x720/3d1846/f8fafc?text=Solar+Regatta+General+Meeting",
       alt: "Solar Regatta General Meeting.",
-      ctaText: "Event details placeholder",
-      registerLink: "#"
+      discordLink: "https://discord.gg/G2dvwZGfUD"
     }
   ],
   membershipBenefits: [
@@ -225,10 +213,6 @@ window.siteContent = {
     {
       question: "Do I need national IEEE membership right away?",
       answer: "No. To join IEEE at SFSU locally, join the Discord and attend events. A paid national IEEE membership is optional if you want extra IEEE benefits later."
-    },
-    {
-      question: "What should go on this page long term?",
-      answer: "For now, keep it simple: when to join, why it matters, and what a new member should do next."
     }
   ],
   officers: [

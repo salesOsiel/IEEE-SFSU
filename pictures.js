@@ -10,6 +10,12 @@
 window.sitePictures = {
   homepage: [
     {
+      title: "SanDisk Resume Workshop",
+      caption: "Live resume reviews, 1-on-1 feedback, and Q&A with SanDisk recruiters and engineers on September 14.",
+      image: "images/sandisk-logo.jpg",
+      alt: "SanDisk logo."
+    },
+    {
       title: "Solar Gators",
       caption: "Solar Gators is the SFSU team that competes in the Solar Regatta each May. We build boats!",
       image: "images/sfsu_gators.jpg",
@@ -20,12 +26,6 @@ window.sitePictures = {
       caption: "Created by ASME and Bit-Bots we have the robots combat club at SFSU.",
       image: "images/chompcity.png",
       alt: "Chomp City robotics combat club picture."
-    },
-    {
-      title: "Research opportunities in SFSU",
-      caption: "We have different reserach groups for electrical engineers: NeCRL and ICE Lab.",
-      image: "images/research.png",
-      alt: "SFSU research groups picture."
     },
     {
       title: "Student Project showcase",
