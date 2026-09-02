@@ -281,7 +281,7 @@
         <div class="border-t border-white/10">
           <div class="mx-auto flex max-w-7xl flex-col gap-3 px-6 py-5 text-sm text-slate-400 lg:flex-row lg:items-center lg:justify-between lg:px-8">
             <p>&copy; ${new Date().getFullYear()} ${content.site.fullName}</p>
-            <p>Placeholder info for location, email, and social links can be updated in content.js.</p>
+            <!-- Placeholder info for location, email, and social links can be updated in content.js. -->
           </div>
         </div>
       </div>
@@ -686,6 +686,8 @@
       });
     }
 
+    // Dev note: to add a new event, add an event object to content.upcomingEvents
+    // using an existing (or new) category name and it will appear here automatically.
     function renderCards() {
       const visibleEvents =
         !activeCategory
@@ -698,9 +700,9 @@
         listTarget.innerHTML = `
           <article class="rounded-[1.9rem] border border-dashed border-white/15 bg-slate-900/55 p-6 text-center shadow-panel lg:col-span-2">
             <p class="text-sm font-semibold uppercase tracking-[0.24em] text-sfsu-300">No upcoming events yet</p>
-            <h3 class="mt-3 text-2xl font-bold text-white">${escapeHtml(emptyCategoryLabel)} placeholders can be added next.</h3>
+            <h3 class="mt-3 text-2xl font-bold text-white">No ${escapeHtml(emptyCategoryLabel)} events on the calendar yet.</h3>
             <p class="mx-auto mt-3 max-w-2xl text-sm leading-7 text-slate-300">
-              Add a new event object in content.js using this category name, and it will appear here automatically.
+              Check back soon, or follow our Discord for updates.
             </p>
           </article>
         `;
@@ -745,6 +747,9 @@
     renderCards();
   }
 
+  // Dev note: this panel stays empty until content.googleCalendar.apiKey and
+  // .calendarId are set (in content.js) — once both are filled in, it renders
+  // live events fetched from that calendar below.
   function renderGoogleCalendar() {
     const target = document.getElementById("google-calendar-panel");
 
@@ -755,29 +760,6 @@
     const settings = content.googleCalendar || {};
 
     if (!settings.apiKey || !settings.calendarId) {
-      target.innerHTML = `
-        <div class="rounded-[2rem] border border-white/10 bg-slate-900/75 p-8 shadow-panel">
-          <div class="grid gap-8 lg:grid-cols-[1fr_0.9fr] lg:items-start">
-            <div>
-              <p class="text-sm font-semibold uppercase tracking-[0.24em] text-sfsu-300">Google Calendar API</p>
-              <h2 class="mt-3 text-3xl font-bold text-white">Chapter calendar connection</h2>
-              <p class="mt-4 max-w-2xl text-base leading-8 text-slate-300">
-                Add your Google Calendar API key and calendar ID in content.js to show live calendar items here.
-              </p>
-            </div>
-            <div class="grid gap-3 text-sm">
-              <div class="rounded-[1.25rem] border border-white/10 bg-slate-950/70 p-4">
-                <p class="font-semibold text-white">apiKey</p>
-                <p class="mt-1 text-slate-400">content.googleCalendar.apiKey</p>
-              </div>
-              <div class="rounded-[1.25rem] border border-white/10 bg-slate-950/70 p-4">
-                <p class="font-semibold text-white">calendarId</p>
-                <p class="mt-1 text-slate-400">content.googleCalendar.calendarId</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
       return;
     }
 

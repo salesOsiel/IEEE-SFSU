@@ -12,7 +12,7 @@ window.siteContent = {
     meetingTime: "Wednesdays at 4:30 PM",
     social: [
       { label: "Instagram", href: "https://www.instagram.com/ieeesfsu/"},
-      { label: "LinkedIn", href: "https://www.linkedin.com/company/sfsu-ieee" },
+      { label: "LinkedIn", href: "https://www.linkedin.com/company/ieeesfsu" },
       { label: "Discord", href: "https://discord.com/invite/zUatMA5DYS" }
     ],
     footerLinks: [
@@ -72,8 +72,7 @@ window.siteContent = {
   ],
   chapterStats: [
     { value: 40, suffix: "+", label: "active members" },
-    // { value: 12, suffix: "+", label: "planned events" },
-    { suffix: "", label: "planned events" },
+    { value: 2, suffix: "", label: "planned events" },
     { value: 200, suffix: "+", label: "alumni connections" },
     { value: 10, suffix: "+", label: "research labs" }
   ],
@@ -142,16 +141,16 @@ window.siteContent = {
       registerLink: "#"
     },
     {
-      slug: "solar-regatta-info-session",
-      title: "Solar Regatta Info Session",
+      slug: "solar-regatta-general-meeting",
+      title: "Solar Regatta General Meeting",
       category: "Solar Regatta",
-      date: "September 10, 2026",
-      time: "5:00 PM to 6:00 PM",
-      location: "Maker Space TBD",
-      description: "A placeholder partner-org event for students interested in electrical systems, boat design, and competition teams.",
-      details: "Use this container for other organization events that IEEE members may want to attend.",
-      image: "https://placehold.co/1200x720/3d1846/f8fafc?text=Solar+Regatta+Info+Session",
-      alt: "Placeholder image labeled Solar Regatta Info Session.",
+      date: "September 3, 2026",
+      time: "12:30 PM to 3:00 PM",
+      location: "SEIC 400",
+      description: "An open session for students interested in electrical systems, boat design, and joining the Solar Regatta competition team.",
+      details: "Meeting to discuss team building and beginning designs for new systems. Solar Regatta meets every Thursday in SEIC 400 — same time and room each week.",
+      image: "https://placehold.co/1200x720/3d1846/f8fafc?text=Solar+Regatta+General+Meeting",
+      alt: "Solar Regatta General Meeting.",
       ctaText: "Event details placeholder",
       registerLink: "#"
     }
