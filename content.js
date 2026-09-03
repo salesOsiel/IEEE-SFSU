@@ -7,9 +7,11 @@ window.siteContent = {
     shortName: "IEEE SFSU",
     fullName: "IEEE at San Francisco State University",
     tagline: "Advancing technology for humanity through hardware, robotics, and research.",
-    email: "ieee@sfsu.edu",
-    location: "Engineering Building, Room TBD",
-    meetingTime: "Wednesdays at 4:30 PM",
+    email: "sfsu.ieee@gmail.com",
+    // No set room or standing meeting time yet — the footer skips these lines while
+    // they are commented out. Uncomment (with real values) once they are confirmed.
+    // location: "Engineering Building, Room TBD",
+    // meetingTime: "Wednesdays at 4:30 PM",
     social: [
       { label: "Instagram", href: "https://www.instagram.com/ieeesfsu/"},
       { label: "LinkedIn", href: "https://www.linkedin.com/company/ieeesfsu" },
@@ -20,7 +22,8 @@ window.siteContent = {
       { label: "About", href: "index.html#about" },
       { label: "Event Calendar", href: "event-calendar.html" },
       { label: "Officers", href: "officers.html" },
-      { label: "Support/Donation", href: "support.html" }
+      { label: "Support/Donation", href: "support.html" },
+      { label: "Opportunities", href: "research.html" }
     ]
   },
   navigation: [
@@ -35,14 +38,20 @@ window.siteContent = {
     },
     // Disabled until the officers page has real content — remove `disabled` to re-enable.
     { label: "Officers", href: "officers.html", disabled: true },
-    { label: "Event Calendar", href: "event-calendar.html" },
+    {
+      label: "Event Calendar",
+      links: [
+        { label: "Upcoming Events", href: "event-calendar.html" },
+        // Disabled until past-events.html has real chapter history — remove `disabled` to re-enable.
+        { label: "Past Events", href: "past-events.html", disabled: true }
+      ]
+    },
     { label: "Support/Donate", href: "support.html" },
     {
-      label: "Past Events",
+      label: "Opportunities",
       links: [
-        { label: "2024-25", href: "past-events.html#year-24-25" },
-        { label: "2025-26", href: "past-events.html#year-25-26" },
-        { label: "2026-27", href: "past-events.html#year-26-27" }
+        { label: "Student Orgs", href: "research.html#student-orgs" },
+        { label: "Research Labs", href: "research.html#research-labs" }
       ]
     }
   ],
@@ -73,7 +82,7 @@ window.siteContent = {
   ],
   chapterStats: [
     { value: 40, suffix: "+", label: "active members" },
-    { value: 4, suffix: "", label: "planned events" },
+    { value: 4, suffix: "+", label: "planned events" },
     { value: 200, suffix: "+", label: "alumni connections" },
     { value: 10, suffix: "+", label: "research labs" }
   ],
@@ -119,7 +128,7 @@ window.siteContent = {
       // Local start/end used to build "Add to calendar" links — keep in sync with date/time above.
       startISO: "2026-09-14T18:00:00",
       endISO: "2026-09-14T19:30:00",
-      location: "Engineering Building, Room TBD",
+      location: "SEIC 401 + Hybrid option",
       description: "Learn what recruiters and engineers actually look for, and get your resume reviewed live by SanDisk professionals.",
       details: "Includes a live resume review, small-group / 1-on-1 resume reviews, and a Q&A with career advice from SanDisk recruiters and engineers.",
       image: "images/sandisk-logo.jpg",
@@ -214,6 +223,255 @@ window.siteContent = {
     {
       question: "Do I need national IEEE membership right away?",
       answer: "No. To join IEEE at SFSU locally, join the Discord and attend events. A paid national IEEE membership is optional if you want extra IEEE benefits later."
+    }
+  ],
+  // Dev note: feeds research.html's #student-orgs-grid. Source: SF State School of
+  // Engineering student organizations page
+  // (https://engineering.sfsu.edu/student-organizations). Officer rosters are left out
+  // on purpose so this list does not go stale every time a board turns over — contact
+  // links only. IEEE is listed first since this is our site.
+  studentOrgs: [
+    {
+      name: "Institute of Electrical and Electronics Engineers",
+      acronym: "IEEE",
+      description: "That's us. The student chapter for electrical and computer engineering at SF State, connecting students through hands-on projects, industry events, and scholarship.",
+      links: [
+        { label: "Email", href: "mailto:sfsu.ieee@gmail.com" },
+        { label: "Discord", href: "https://discord.com/invite/zUatMA5DYS" },
+        { label: "Instagram", href: "https://www.instagram.com/ieeesfsu/" }
+      ]
+    },
+    {
+      name: "American Society of Civil Engineering",
+      acronym: "ASCE",
+      description: "Bridges the gap between SF State civil engineering students and industry through social events, seminars, and career fairs.",
+      links: [
+        { label: "Email", href: "mailto:sfascesu@gmail.com" },
+        { label: "Website", href: "https://www.ascesfsu.org" },
+        { label: "Instagram", href: "https://instagram.com/ascesfsu" }
+      ]
+    },
+    {
+      name: "American Society of Heating, Refrigerating, and Air-conditioning Engineers",
+      acronym: "ASHRAE",
+      description: "For students exploring careers in energy efficiency and HVACR, with monthly professional meetings and funding to attend national conferences.",
+      links: [
+        { label: "Email", href: "mailto:ashraegg@mail.sfsu.edu" },
+        { label: "Website", href: "https://ggashrae.org" }
+      ]
+    },
+    {
+      name: "American Society of Mechanical Engineers",
+      acronym: "ASME",
+      description: "The officially recognized ASME International student section at SF State, running career events, industry tours, seminars, and socials for future mechanical engineers.",
+      links: [
+        { label: "Email", href: "mailto:asme@mail.sfsu.edu" },
+        { label: "Website", href: "https://www.sfasme.org/" },
+        { label: "Instagram", href: "https://www.instagram.com/sfsuasme/" },
+        { label: "Linktree", href: "https://linktr.ee/asmeatsfsu" }
+      ]
+    },
+    {
+      name: "Engineering Design Club",
+      acronym: "EDC",
+      description: "A newer org offering robotics, design, and controls experience — currently focused on building affordable, open-source prosthetics for amputees.",
+      links: [{ label: "Email", href: "mailto:jmarti30@mail.sfsu.edu" }]
+    },
+    {
+      name: "Engineering Students Advisory Board",
+      acronym: "ESAB",
+      description: "Student advisory board that keeps engineering and computer science students up to date on School of Engineering news, events, and opportunities.",
+      links: [
+        { label: "Email", href: "mailto:esabsfstate@gmail.com" },
+        { label: "Instagram", href: "https://www.instagram.com/esabsfstate/" }
+      ]
+    },
+    {
+      name: "Golden Gate Racing",
+      acronym: "SAE",
+      description: "Designs and manufactures a completely bespoke race car, building skills in fabrication, budgeting, project management, and teamwork along the way.",
+      links: [{ label: "Email", href: "mailto:sae.sfsu@gmail.com" }]
+    },
+    {
+      name: "National Society of Black Engineers",
+      acronym: "NSBE",
+      description: "Works to increase the number of culturally responsible Black engineers through academic support, technical experience, career fairs, industry tours, and conferences.",
+      links: [
+        { label: "Email", href: "mailto:nsbeatsfsu@gmail.com" },
+        { label: "Discord", href: "https://discord.gg/QUMrhxfFSc" },
+        { label: "Instagram", href: "https://www.instagram.com/nsbe_at_sfsu/" }
+      ]
+    },
+    {
+      name: "Rapid Prototyping Lab",
+      acronym: "RPL",
+      description: "Student-led makerspace open to all SF State engineering students, with 3D printing, CAD software, manufacturing tools, and training for class and senior design projects. Based in SCI 109.",
+      links: [
+        { label: "Email", href: "mailto:rplabsfsu@gmail.com" },
+        { label: "Website", href: "https://engineering.sfsu.edu/rpl-project" }
+      ]
+    },
+    {
+      name: "SF Hacks",
+      acronym: "",
+      description: "Plans and hosts a 24-hour hackathon that brings collegiate hackers, designers, and developers together for a weekend of building.",
+      links: [
+        { label: "Email", href: "mailto:sfhacksteam@gmail.com" },
+        { label: "Website", href: "https://sfhacks.io/" },
+        { label: "Discord", href: "https://discord.gg/255R44UjPt" },
+        { label: "Instagram", href: "https://www.instagram.com/sf.hacks/" }
+      ]
+    },
+    {
+      name: "Society of Hispanic Professional Engineers",
+      acronym: "SHPE",
+      description: "Empowers the Hispanic community to reach its fullest potential through STEM awareness, access, support, and professional development.",
+      links: [
+        { label: "Email", href: "mailto:shpesfsu@gmail.com" },
+        { label: "Website", href: "https://shpesfsu.wixsite.com/shpesfsu" },
+        { label: "Linktree", href: "http://linktr.ee/shpesfsu" }
+      ]
+    },
+    {
+      name: "Society of Women Engineers",
+      acronym: "SWE",
+      description: "Focuses on empowering women in engineering and technology to reach their full potential and become leaders, while promoting the value of diversity and inclusion.",
+      links: [
+        { label: "Email", href: "mailto:swesfsu@gmail.com" },
+        { label: "Linktree", href: "https://linktr.ee/SWESFSU" }
+      ]
+    },
+    {
+      name: "Solar Electric Vehicle Team",
+      acronym: "SEVT",
+      description: "Student-run team that designs, builds, and funds a single-occupant solar vehicle to race in the Formula Sun Grand Prix every summer.",
+      links: [
+        { label: "Email", href: "mailto:general@sevtsfsu.org" },
+        { label: "Website", href: "http://www.sevtsfsu.org" }
+      ]
+    },
+    {
+      name: "Tau Beta Pi",
+      acronym: "TBP",
+      description: "The nation's oldest engineering honor society, founded in 1885 to recognize students for distinguished scholarship and exemplary character.",
+      links: [
+        { label: "Email", href: "mailto:tbpsfsu@gmail.com" },
+        { label: "National site", href: "https://www.tbp.org/" }
+      ]
+    }
+  ],
+  // Dev note: feeds research.html's #research-labs-grid. Source: SF State College of
+  // Engineering (https://engineering.sfsu.edu/research-labs-and-centers). EE/CE-related
+  // labs are listed first since they're most relevant to IEEE members.
+  researchLabs: [
+    {
+      name: "AI-LAMP: AI Lab for Augmented Multimodal Perception",
+      director: "Dr. Sanchita Ghose",
+      focus: "Computer Engineering",
+      description: "Multimodal and cross-modal learning with deep neural networks, with a focus on computer vision research.",
+      link: "https://sites.google.com/view/ai-lamp/",
+      room: "SEC 404"
+    },
+    {
+      name: "Nano-Electronics and Computing Research Laboratory (NeCRL)",
+      director: "Dr. Hamid Mahmoodi",
+      focus: "Electrical Engineering",
+      description: "Designs dependable, energy-efficient computing circuits using emerging nanotechnologies.",
+      link: "https://necrl.github.io/NECRL/",
+      room: "SEC 318"
+    },
+    {
+      name: "Intelligent Computing and Embedded Systems Laboratory (ICE Lab)",
+      director: "Dr. Xiaorong Zhang",
+      focus: "Computer Engineering",
+      description: "Human-machine interfaces, neural-controlled prosthetics, and virtual reality rehabilitation systems.",
+      link: "http://www.sfsu-icelab.org/",
+      room: "SEC 313"
+    },
+    {
+      name: "Personalized Health and Assistive Technologies Laboratory (PHAST Lab)",
+      director: "Dr. Alyssa Kubota",
+      focus: "Biomedical/Mechanical Engineering",
+      description: "Human-robot interaction, particularly with socially assistive robots, and accessible technology design.",
+      room: "SEC 404"
+    },
+    {
+      name: "SFSU-Bioelectronics Lab",
+      director: "Dr. Hao Jiang",
+      focus: "Electrical Engineering",
+      description: "Low-power integrated circuits for biomedical and bio-inspired computing applications.",
+      link: "http://www.sfsu-bioelectronicslab.org/",
+      room: "SEC 318"
+    },
+    {
+      name: "Mobile and Intelligent Computing Laboratory (MIC Lab)",
+      director: "Dr. Zhuwei Qin",
+      focus: "Computer Engineering",
+      description: "Efficient mobile computing, deep learning acceleration, and distributed edge computing.",
+      link: "http://sfsu-miclab.org/",
+      room: "SEC 313"
+    },
+    {
+      name: "Computational Structural Simulations and Additive Manufacturing Lab (CSSAM Lab)",
+      director: "Dr. Jenna Wong",
+      focus: "Civil Engineering",
+      description: "Finite element computational simulations and additive manufacturing applications for civil engineering.",
+      room: "SEC 320"
+    },
+    {
+      name: "Rapid Prototyping Laboratory (RPL)",
+      director: "Dr. Kwok Siong Teh",
+      focus: "Engineering (Cross-disciplinary)",
+      description: "A student-run makerspace with 3D printing and modeling capabilities.",
+      link: "https://www.facebook.com/SFSU-Rapid-Prototyping-Lab-940000839345311/"
+      // Room not listed on the department site (marked "Location TBD" there).
+    },
+    {
+      name: "Intelligent Structural Hazard Mitigation Laboratory (iSHM)",
+      director: "Dr. Zhaoshuo Jiang",
+      focus: "Civil Engineering",
+      description: "Structural dynamics and vibrations research for community safety and infrastructure resilience.",
+      room: "SEC 320"
+    },
+    {
+      name: "Complex Fluids Lab",
+      director: "Dr. Fatemeh Khalkhal",
+      focus: "Mechanical Engineering",
+      description: "Flow structures in polymer solutions, suspensions, and emulsions using computational and experimental methods.",
+      link: "https://faculty.sfsu.edu/~fkhal/home",
+      room: "SEC 315"
+    },
+    {
+      name: "Controls for Assistive and REhabilitation Robotics Lab (CARE Lab)",
+      director: "Dr. David Quintero",
+      focus: "Mechanical Engineering",
+      description: "Designs wearable robotic systems, including prosthetics and exoskeletons, for mobility assistance.",
+      link: "https://www.careroboticslab.com/",
+      room: "SEC 313"
+    },
+    {
+      name: "Industrial Assessment Center (IAC)",
+      director: "Dr. Ahmad R. Ganji",
+      focus: "Engineering (Cross-disciplinary)",
+      description: "Complimentary engineering assessments for regional manufacturers on energy, waste, and productivity.",
+      link: "http://iac.sfsu.edu/",
+      room: "SCI 215"
+    },
+    {
+      name: "Biomechatronics Research Lab (BRL)",
+      director: "Dr. Mojtaba Azadi",
+      focus: "Biomedical Engineering",
+      description: "Develops biomechanical assessment tools to detect changes in soft biological materials.",
+      link: "https://sites.google.com/view/mojtabaazadi/facility",
+      room: "SEC 316"
+    },
+    {
+      name: "Gator Engineering Education Research Lab (GEER Lab)",
+      director: "Dr. Stephanie Claussen",
+      focus: "Engineering Education",
+      description: "Research on equitable engineering education, ethics, and inclusive engineering practices.",
+      link: "https://sfsuengineeringeducation.org/",
+      room: "SEC 314"
     }
   ],
   officers: [
