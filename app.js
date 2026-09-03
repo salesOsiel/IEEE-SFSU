@@ -55,6 +55,19 @@
       .replace(/'/g, "&#039;");
   }
 
+  function isPastEvent(event) {
+    return new Date(event.endISO || event.startISO).getTime() < Date.now();
+  }
+
+  // Aug(month 7)-Dec counts as that year's fall term, Jan-Jul as the previous year's
+  // spring term — matches the existing year-24-25-style anchor IDs used in navigation.
+  function getAcademicYear(event) {
+    const date = new Date(event.startISO);
+    const startYear = date.getMonth() >= 7 ? date.getFullYear() : date.getFullYear() - 1;
+    const label = `${String(startYear).slice(-2)}-${String(startYear + 1).slice(-2)}`;
+    return { id: `year-${label}`, label };
+  }
+
   // event.startISO/endISO are local time, no offset (e.g. "2026-09-14T18:00:00").
   function buildGoogleCalendarUrl(event) {
     const toGoogleDate = (iso) => iso.replace(/[-:]/g, "");
@@ -127,6 +140,33 @@
         ${event.ctaText}
       </a>
       ${secondaryAction}
+    `;
+  }
+
+  // Shared full-size event card, used for both upcoming events (event-calendar.html,
+  // with actions) and past events (past-events.html, showActions: false — "Add to
+  // calendar"/"Join the Discord" don't make sense for something already over).
+  function renderEventCard(event, options) {
+    const showActions = !options || options.showActions !== false;
+
+    return `
+      <article id="${event.slug}" class="rounded-[1.9rem] border border-white/10 bg-slate-900/80 p-6 shadow-panel">
+        <div class="overflow-hidden rounded-[1.5rem] border border-white/10">
+          <img src="${event.image}" alt="${event.alt}" class="h-56 w-full object-cover" loading="lazy" />
+        </div>
+        <div class="mt-6 flex flex-wrap items-center justify-between gap-3">
+          <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-slate-200">${event.category}</span>
+          <span class="text-sm font-medium text-slate-400">${event.date}</span>
+        </div>
+        <h3 class="mt-4 text-2xl font-bold text-white">${event.title}</h3>
+        <p class="mt-3 text-sm leading-7 text-slate-300">${event.description}</p>
+        <div class="mt-5 grid gap-2 text-sm text-slate-300">
+          <p><span class="font-semibold text-white">Time:</span> ${event.time}</p>
+          <p><span class="font-semibold text-white">Location:</span> ${event.location}</p>
+        </div>
+        <p class="mt-5 rounded-[1.4rem] bg-slate-950/70 p-4 text-sm leading-7 text-slate-300">${event.details}</p>
+        ${showActions ? `<div class="mt-6 flex flex-wrap gap-3">${renderEventActions(event)}</div>` : ""}
+      </article>
     `;
   }
 
@@ -524,7 +564,9 @@
       return;
     }
 
-    target.innerHTML = content.upcomingEvents
+    target.innerHTML = content.events
+      .filter((event) => !isPastEvent(event))
+      .sort((a, b) => new Date(a.startISO) - new Date(b.startISO))
       .slice(0, 3)
       .map(
         (event) => `
@@ -875,7 +917,7 @@
     }
 
     const categories =
-      content.eventFilters || Array.from(new Set(content.upcomingEvents.map((event) => event.category)));
+      content.eventFilters || Array.from(new Set(content.events.map((event) => event.category)));
     let activeCategory = "";
 
     function renderFilters() {
@@ -906,13 +948,17 @@
       });
     }
 
-    // Dev note: to add a new event, add an event object to content.upcomingEvents
-    // using an existing (or new) category name and it will appear here automatically.
+    // Dev note: to add a new event, add an event object to content.events (see the
+    // dev note above that array in content.js) — it appears here automatically as long
+    // as its startISO/endISO are in the future, and moves to past-events.html on its own
+    // once they aren't.
     function renderCards() {
-      const visibleEvents =
-        !activeCategory
-          ? content.upcomingEvents
-          : content.upcomingEvents.filter((event) => event.category === activeCategory);
+      const upcoming = content.events
+        .filter((event) => !isPastEvent(event))
+        .sort((a, b) => new Date(a.startISO) - new Date(b.startISO));
+      const visibleEvents = !activeCategory
+        ? upcoming
+        : upcoming.filter((event) => event.category === activeCategory);
 
       if (!visibleEvents.length) {
         const emptyCategoryLabel = activeCategory || "Future event";
@@ -929,31 +975,7 @@
         return;
       }
 
-      listTarget.innerHTML = visibleEvents
-        .map(
-          (event) => `
-            <article id="${event.slug}" class="rounded-[1.9rem] border border-white/10 bg-slate-900/80 p-6 shadow-panel">
-              <div class="overflow-hidden rounded-[1.5rem] border border-white/10">
-                <img src="${event.image}" alt="${event.alt}" class="h-56 w-full object-cover" loading="lazy" />
-              </div>
-              <div class="mt-6 flex flex-wrap items-center justify-between gap-3">
-                <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-slate-200">${event.category}</span>
-                <span class="text-sm font-medium text-slate-400">${event.date}</span>
-              </div>
-              <h3 class="mt-4 text-2xl font-bold text-white">${event.title}</h3>
-              <p class="mt-3 text-sm leading-7 text-slate-300">${event.description}</p>
-              <div class="mt-5 grid gap-2 text-sm text-slate-300">
-                <p><span class="font-semibold text-white">Time:</span> ${event.time}</p>
-                <p><span class="font-semibold text-white">Location:</span> ${event.location}</p>
-              </div>
-              <p class="mt-5 rounded-[1.4rem] bg-slate-950/70 p-4 text-sm leading-7 text-slate-300">${event.details}</p>
-              <div class="mt-6 flex flex-wrap gap-3">
-                ${renderEventActions(event)}
-              </div>
-            </article>
-          `
-        )
-        .join("");
+      listTarget.innerHTML = visibleEvents.map((event) => renderEventCard(event)).join("");
 
       highlightHashTarget();
     }
@@ -1101,42 +1123,62 @@
       return;
     }
 
-    jumpTarget.innerHTML = content.archiveYears
+    const pastEvents = content.events
+      .filter(isPastEvent)
+      .sort((a, b) => new Date(b.startISO) - new Date(a.startISO));
+
+    if (!pastEvents.length) {
+      jumpTarget.innerHTML = "";
+      sectionTarget.innerHTML = `
+        <article class="rounded-[1.9rem] border border-dashed border-white/15 bg-slate-900/55 p-6 text-center shadow-panel">
+          <p class="text-sm font-semibold uppercase tracking-[0.24em] text-sfsu-300">No past events yet</p>
+          <h3 class="mt-3 text-2xl font-bold text-white">This year's events will show up here once they've happened.</h3>
+          <p class="mx-auto mt-3 max-w-2xl text-sm leading-7 text-slate-300">
+            Check back after the next meeting or workshop wraps up.
+          </p>
+        </article>
+      `;
+      return;
+    }
+
+    // pastEvents is already newest-first, and Map keeps insertion order, so the
+    // resulting year groups come out newest-first for free.
+    const years = new Map();
+    pastEvents.forEach((event) => {
+      const { id, label } = getAcademicYear(event);
+      if (!years.has(id)) {
+        years.set(id, { id, label, events: [] });
+      }
+      years.get(id).events.push(event);
+    });
+    const yearGroups = Array.from(years.values());
+
+    jumpTarget.innerHTML = yearGroups
       .map(
         (year) => `
           <a
             href="past-events.html#${year.id}"
             class="rounded-full border border-white/10 bg-slate-900/80 px-4 py-2 text-sm font-semibold text-slate-300 transition hover:border-ieee-300/40 hover:text-white"
           >
-            ${year.year}
+            ${year.label}
           </a>
         `
       )
       .join("");
 
-    sectionTarget.innerHTML = content.archiveYears
+    sectionTarget.innerHTML = yearGroups
       .map(
         (year) => `
           <section id="${year.id}" class="rounded-[2rem] border border-white/10 bg-slate-900/80 p-8 shadow-panel" data-reveal>
             <div class="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
               <div>
                 <p class="text-sm font-semibold uppercase tracking-[0.24em] text-ieee-200">Academic year</p>
-                <h2 class="mt-2 text-3xl font-bold text-white">${year.year}</h2>
+                <h2 class="mt-2 text-3xl font-bold text-white">${year.label}</h2>
               </div>
-              <p class="max-w-2xl text-sm leading-7 text-slate-300">${year.summary}</p>
+              <p class="text-sm text-slate-400">${year.events.length} event${year.events.length === 1 ? "" : "s"}</p>
             </div>
-            <div class="mt-8 grid gap-5 md:grid-cols-2">
-              ${year.events
-                .map(
-                  (event) => `
-                    <article class="rounded-[1.5rem] border border-white/10 bg-slate-950/70 p-5">
-                      <p class="text-xs font-semibold uppercase tracking-[0.22em] text-sfsu-300">${event.season}</p>
-                      <h3 class="mt-3 text-xl font-bold text-white">${event.title}</h3>
-                      <p class="mt-3 text-sm leading-7 text-slate-300">${event.description}</p>
-                    </article>
-                  `
-                )
-                .join("")}
+            <div class="mt-8 grid gap-6 md:grid-cols-2">
+              ${year.events.map((event) => renderEventCard(event, { showActions: false })).join("")}
             </div>
           </section>
         `

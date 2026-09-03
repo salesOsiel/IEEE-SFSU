@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Event — IEEE at SFSU (local tool)</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../tailwind-theme.js"></script>
+    <link rel="stylesheet" href="../style.css" />
+    <script src="../content.js"></script>
+  </head>
+  <body class="min-h-screen bg-slate-950 px-6 py-12 text-slate-100">
+    <div class="mx-auto max-w-3xl">
+      <p class="text-sm font-semibold uppercase tracking-[0.24em] text-sfsu-300">Local tool — not part of the live site</p>
+      <h1 class="mt-3 text-3xl font-black text-white">Add an event</h1>
+      <p class="mt-3 max-w-2xl text-sm leading-7 text-slate-300">
+        Fill this out, hit <strong class="text-white">Generate</strong>, copy the result, and paste it as a new entry
+        into the <code class="rounded bg-white/10 px-1.5 py-0.5">events</code> array in
+        <code class="rounded bg-white/10 px-1.5 py-0.5">content.js</code>. The event shows up on the homepage and
+        event calendar automatically, and moves itself to the past-events archive once it's over — nothing else to
+        edit.
+      </p>
+
+      <form id="event-form" class="mt-10 grid gap-6 rounded-[2rem] border border-white/10 bg-slate-900/80 p-8 shadow-panel">
+        <div>
+          <label class="block text-sm font-semibold text-white" for="title">Title</label>
+          <input id="title" type="text" required class="field" placeholder="SanDisk Workshop" />
+        </div>
+
+        <div class="grid gap-2 sm:grid-cols-[1fr_auto] sm:items-end">
+          <div>
+            <label class="block text-sm font-semibold text-white" for="slug">Slug</label>
+            <input id="slug" type="text" class="field" placeholder="auto-filled from title" />
+          </div>
+          <p id="slug-warning" hidden class="text-xs font-semibold text-signal-300 sm:pb-3">
+            An event with this slug already exists in content.js — pick a different one.
+          </p>
+        </div>
+
+        <div class="grid gap-6 sm:grid-cols-2">
+          <div>
+            <label class="block text-sm font-semibold text-white" for="category">Category</label>
+            <select id="category" class="field"></select>
+            <input id="category-other" type="text" hidden class="field mt-2" placeholder="New category name" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-white" for="location">Location</label>
+            <input id="location" type="text" class="field" placeholder="SEIC 400" />
+          </div>
+        </div>
+
+        <div class="grid gap-6 sm:grid-cols-3">
+          <div>
+            <label class="block text-sm font-semibold text-white" for="date">Date</label>
+            <input id="date" type="date" required class="field" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-white" for="start-time">Start time</label>
+            <input id="start-time" type="time" required class="field" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-white" for="end-time">End time</label>
+            <input id="end-time" type="time" required class="field" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold text-white" for="description">Short description</label>
+          <p class="text-xs text-slate-400">One sentence — shows under the title on every card.</p>
+          <textarea id="description" rows="2" class="field mt-1"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold text-white" for="details">Details</label>
+          <p class="text-xs text-slate-400">A sentence or two — shows in the highlighted box below Time/Location.</p>
+          <textarea id="details" rows="3" class="field mt-1"></textarea>
+        </div>
+
+        <div class="grid gap-6 sm:grid-cols-2">
+          <div>
+            <label class="block text-sm font-semibold text-white" for="image">Image URL</label>
+            <input id="image" type="text" class="field" placeholder="images/your-photo.jpg or a placehold.co URL" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-white" for="alt">Image alt text</label>
+            <input id="alt" type="text" class="field" />
+          </div>
+        </div>
+
+        <fieldset>
+          <legend class="text-sm font-semibold text-white">Action button</legend>
+          <p class="text-xs text-slate-400">
+            Every event automatically gets an "Add to calendar" option once it has a date. Choose what the other
+            button does.
+          </p>
+          <div class="mt-3 grid gap-3 sm:grid-cols-2">
+            <label class="flex items-start gap-2 rounded-2xl border border-white/10 bg-slate-950/60 p-4">
+              <input type="radio" name="cta-mode" value="register" checked class="mt-1" />
+              <span>
+                <span class="block text-sm font-semibold text-white">Register / RSVP button</span>
+                <span class="block text-xs text-slate-400">Links out to a form, signup, or details page.</span>
+              </span>
+            </label>
+            <label class="flex items-start gap-2 rounded-2xl border border-white/10 bg-slate-950/60 p-4">
+              <input type="radio" name="cta-mode" value="discord" class="mt-1" />
+              <span>
+                <span class="block text-sm font-semibold text-white">Discord button only</span>
+                <span class="block text-xs text-slate-400">Replaces both buttons with one link to a Discord invite.</span>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div id="register-fields" class="grid gap-6 sm:grid-cols-2">
+          <div>
+            <label class="block text-sm font-semibold text-white" for="cta-text">Button text</label>
+            <input id="cta-text" type="text" class="field" placeholder="RSVP" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-white" for="register-link">Button link</label>
+            <input id="register-link" type="text" class="field" placeholder="#" />
+          </div>
+        </div>
+
+        <div id="discord-fields" hidden>
+          <label class="block text-sm font-semibold text-white" for="discord-link">Discord invite link</label>
+          <input id="discord-link" type="text" class="field" placeholder="https://discord.gg/..." />
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+          <button type="submit" class="rounded-full bg-ieee-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-ieee-800">
+            Generate
+          </button>
+          <button type="button" id="copy-btn" class="rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition hover:border-ieee-300/40 hover:bg-white/10">
+            Copy to clipboard
+          </button>
+          <span id="copy-status" class="self-center text-sm text-slate-400"></span>
+        </div>
+      </form>
+
+      <div class="mt-6">
+        <label class="block text-sm font-semibold text-white" for="output">Paste this into content.js's events array</label>
+        <textarea id="output" rows="16" readonly class="field mt-2 font-mono text-xs leading-6" placeholder="Fill out the form and click Generate."></textarea>
+      </div>
+    </div>
+
+    <style>
+      .field {
+        margin-top: 0.25rem;
+        width: 100%;
+        border-radius: 0.9rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(2, 6, 23, 0.55);
+        padding: 0.65rem 0.9rem;
+        font-size: 0.9rem;
+        color: #f1f5f9;
+      }
+      .field:focus {
+        outline: 2px solid rgba(16, 134, 214, 0.5);
+        outline-offset: 1px;
+      }
+    </style>
+
+    <script>
+      const content = window.siteContent || { eventFilters: [], events: [] };
+
+      const titleEl = document.getElementById("title");
+      const slugEl = document.getElementById("slug");
+      const slugWarningEl = document.getElementById("slug-warning");
+      const categoryEl = document.getElementById("category");
+      const categoryOtherEl = document.getElementById("category-other");
+      const locationEl = document.getElementById("location");
+      const dateEl = document.getElementById("date");
+      const startTimeEl = document.getElementById("start-time");
+      const endTimeEl = document.getElementById("end-time");
+      const descriptionEl = document.getElementById("description");
+      const detailsEl = document.getElementById("details");
+      const imageEl = document.getElementById("image");
+      const altEl = document.getElementById("alt");
+      const ctaTextEl = document.getElementById("cta-text");
+      const registerLinkEl = document.getElementById("register-link");
+      const discordLinkEl = document.getElementById("discord-link");
+      const registerFieldsEl = document.getElementById("register-fields");
+      const discordFieldsEl = document.getElementById("discord-fields");
+      const outputEl = document.getElementById("output");
+      const copyBtn = document.getElementById("copy-btn");
+      const copyStatusEl = document.getElementById("copy-status");
+
+      (content.eventFilters || []).forEach((label) => {
+        const option = document.createElement("option");
+        option.value = label;
+        option.textContent = label;
+        categoryEl.appendChild(option);
+      });
+      const otherOption = document.createElement("option");
+      otherOption.value = "__other__";
+      otherOption.textContent = "Other (type below)";
+      categoryEl.appendChild(otherOption);
+
+      categoryEl.addEventListener("change", () => {
+        categoryOtherEl.hidden = categoryEl.value !== "__other__";
+      });
+
+      document.querySelectorAll('input[name="cta-mode"]').forEach((radio) => {
+        radio.addEventListener("change", () => {
+          const isDiscord = document.querySelector('input[name="cta-mode"]:checked').value === "discord";
+          discordFieldsEl.hidden = !isDiscord;
+          registerFieldsEl.hidden = isDiscord;
+        });
+      });
+
+      let slugTouched = false;
+      slugEl.addEventListener("input", () => {
+        slugTouched = true;
+      });
+      titleEl.addEventListener("input", () => {
+        if (!slugTouched) {
+          slugEl.value = slugify(titleEl.value);
+        }
+      });
+
+      function slugify(text) {
+        return text
+          .toLowerCase()
+          .trim()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/^-+|-+$/g, "");
+      }
+
+      function formatDateDisplay(dateStr) {
+        const [y, m, d] = dateStr.split("-").map(Number);
+        return new Date(y, m - 1, d).toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric",
+          year: "numeric"
+        });
+      }
+
+      function formatTimeDisplay(timeStr) {
+        const [h, m] = timeStr.split(":").map(Number);
+        return new Date(2000, 0, 1, h, m).toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "2-digit"
+        });
+      }
+
+      document.getElementById("event-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const title = titleEl.value.trim();
+        const slug = slugEl.value.trim() || slugify(title);
+        const category =
+          categoryEl.value === "__other__" ? categoryOtherEl.value.trim() : categoryEl.value;
+        const dateStr = dateEl.value;
+        const startTime = startTimeEl.value;
+        const endTime = endTimeEl.value;
+
+        if (!title || !dateStr || !startTime || !endTime) {
+          outputEl.value = "Fill in at least: title, date, start time, and end time.";
+          return;
+        }
+
+        const existingSlugs = (content.events || []).map((e) => e.slug);
+        slugWarningEl.hidden = !existingSlugs.includes(slug);
+
+        const fields = [
+          ["slug", slug],
+          ["title", title],
+          ["category", category],
+          ["date", formatDateDisplay(dateStr)],
+          ["time", `${formatTimeDisplay(startTime)} to ${formatTimeDisplay(endTime)}`],
+          ["startISO", `${dateStr}T${startTime}:00`],
+          ["endISO", `${dateStr}T${endTime}:00`],
+          ["location", locationEl.value.trim()],
+          ["description", descriptionEl.value.trim()],
+          ["details", detailsEl.value.trim()],
+          ["image", imageEl.value.trim()],
+          ["alt", altEl.value.trim()]
+        ];
+
+        const ctaMode = document.querySelector('input[name="cta-mode"]:checked').value;
+        if (ctaMode === "discord") {
+          fields.push(["discordLink", discordLinkEl.value.trim()]);
+        } else {
+          fields.push(["ctaText", ctaTextEl.value.trim() || "RSVP"]);
+          fields.push(["registerLink", registerLinkEl.value.trim() || "#"]);
+        }
+
+        const body = fields
+          .filter(([, value]) => value !== "")
+          .map(([key, value]) => `      ${key}: ${JSON.stringify(value)}`)
+          .join(",\n");
+
+        outputEl.value = `    {\n${body}\n    },`;
+        copyStatusEl.textContent = "";
+      });
+
+      copyBtn.addEventListener("click", async () => {
+        if (!outputEl.value) {
+          copyStatusEl.textContent = "Nothing to copy yet — click Generate first.";
+          return;
+        }
+        try {
+          await navigator.clipboard.writeText(outputEl.value);
+          copyStatusEl.textContent = "Copied!";
+        } catch (error) {
+          outputEl.select();
+          copyStatusEl.textContent = "Couldn't access the clipboard — text is selected, use Ctrl/Cmd+C.";
+        }
+      });
+    </script>
+  </body>
+</html>

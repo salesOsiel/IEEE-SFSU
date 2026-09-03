@@ -118,14 +118,25 @@ window.siteContent = {
     maxResults: 6,
     timeZone: "America/Los_Angeles"
   },
-  upcomingEvents: [
+  // Dev note: ONE list for every event, past and upcoming — nothing needs to be moved
+  // by hand. app.js compares startISO/endISO against the current date on every page
+  // load: events that haven't happened yet show on the homepage and event-calendar.html;
+  // events that have already ended automatically show up on past-events.html, grouped
+  // by academic year (derived from startISO — Aug-Dec counts as that year's fall term,
+  // Jan-Jul as the previous year's spring term). startISO/endISO are REQUIRED on every
+  // entry — they're the only signal used for that classification, for the "Add to
+  // calendar" links, and for the academic-year grouping.
+  //
+  // Easiest way to add a new event: open admin/add-event.html in a browser, fill out
+  // the form, and paste the generated object in here.
+  events: [
     {
       slug: "sandisk-workshop",
       title: "SanDisk Workshop",
       category: "IEEE",
       date: "September 14, 2026",
       time: "6:00 PM to 7:30 PM",
-      // Local start/end used to build "Add to calendar" links — keep in sync with date/time above.
+      // Local start/end — required. Keep in sync with date/time above.
       startISO: "2026-09-14T18:00:00",
       endISO: "2026-09-14T19:30:00",
       location: "SEIC 401 + Hybrid option",
@@ -142,7 +153,7 @@ window.siteContent = {
       category: "Solar Regatta",
       date: "September 3, 2026",
       time: "12:30 PM to 3:00 PM",
-      // Local start/end used to build "Add to calendar" links — keep in sync with date/time above.
+      // Local start/end — required. Keep in sync with date/time above.
       startISO: "2026-09-03T12:30:00",
       endISO: "2026-09-03T15:00:00",
       location: "SEIC 400",
@@ -535,58 +546,8 @@ window.siteContent = {
       image: "https://placehold.co/720x840/542461/f8fafc?text=Outreach+Director",
       alt: "Placeholder image labeled Outreach Director."
     }
-  ],
-  archiveYears: [
-    {
-      id: "year-24-25",
-      year: "24-25",
-      summary: "Placeholder archive area for chapter recaps, photos, and simple year-by-year highlights.",
-      events: [
-        {
-          season: "Fall",
-          title: "Microcontroller Intro Night",
-          description: "A first-semester workshop where new members explored sensors, firmware basics, and simple breadboard projects."
-        },
-        {
-          season: "Spring",
-          title: "Student Project Showcase",
-          description: "Members shared prototypes, posters, and demos with classmates, faculty, and friends."
-        }
-      ]
-    },
-    {
-      id: "year-25-26",
-      year: "25-26",
-      summary: "Use this section for old flyers, event recaps, competition photos, or leadership transitions.",
-      events: [
-        {
-          season: "Fall",
-          title: "Industry Resume Night",
-          description: "Students received feedback on resumes, project descriptions, and internship preparation."
-        },
-        {
-          season: "Spring",
-          title: "Robotics Demo Session",
-          description: "A lightweight archive card for robot tests, final demos, or competition preparation."
-        }
-      ]
-    },
-    {
-      id: "year-26-27",
-      year: "26-27",
-      summary: "Use this current-year archive section for events once they have passed.",
-      events: [
-        {
-          season: "Fall",
-          title: "Faculty Research Q and A",
-          description: "Students learned how undergraduates could contribute to technical research and lab work."
-        },
-        {
-          season: "Spring",
-          title: "Community Outreach Day",
-          description: "Members represented the chapter at a campus or local outreach event and shared engineering demos."
-        }
-      ]
-    }
   ]
+  // Dev note: past-events.html no longer has its own hand-maintained list — it's built
+  // automatically from `events` above (anything with an endISO/startISO in the past).
+  // See the dev note on `events`.
 };
