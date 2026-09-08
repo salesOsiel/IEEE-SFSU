@@ -129,6 +129,10 @@ window.siteContent = {
   //
   // Easiest way to add a new event: open admin/add-event.html in a browser, fill out
   // the form, and paste the generated object in here.
+  //
+  // Standing weekly meeting (not a one-time event)? Add `recurring: true` — it never
+  // gets auto-archived, and its date field should just say "Every <Day>" instead of a
+  // specific date (see the Solar Regatta entry below for the pattern).
   events: [
     {
       slug: "sandisk-workshop",
@@ -151,14 +155,19 @@ window.siteContent = {
       slug: "solar-regatta-general-meeting",
       title: "Solar Regatta General Meeting",
       category: "Solar Regatta",
-      date: "September 3, 2026",
+      // recurring: true means this is a standing weekly meeting, not a one-time event —
+      // it never gets auto-archived to past-events.html, and the sort order treats it as
+      // happening on its next upcoming occurrence rather than going stale. date/time are
+      // just the display strings; startISO/endISO anchor the weekday + time of day (used
+      // for sorting and for "Add to calendar" if this event ever drops discordLink).
+      recurring: true,
+      date: "Every Thursday",
       time: "12:30 PM to 3:00 PM",
-      // Local start/end — required. Keep in sync with date/time above.
       startISO: "2026-09-03T12:30:00",
       endISO: "2026-09-03T15:00:00",
       location: "SEIC 400",
-      description: "An open session for students interested in electrical systems, boat design, and joining the Solar Regatta competition team.",
-      details: "Meeting to discuss team building and beginning designs for new systems. Solar Regatta meets every Thursday in SEIC 400 — same time and room each week.",
+      description: "An open weekly session for students interested in electrical systems, boat design, and joining the Solar Regatta competition team.",
+      details: "Meeting to discuss team building and beginning designs for new systems.",
       image: "images/solar-gators-logo.jpg",
       alt: "Solar Gators logo.",
       discordLink: "https://discord.gg/G2dvwZGfUD"
@@ -487,8 +496,8 @@ window.siteContent = {
   ],
   officers: [
     {
-      role: "Chair",
-      name: "Officer Name",
+      role: "President",
+      name: "Diego Rey",
       major: "Replace with major and graduation year",
       focus: "Leads chapter direction, partnerships, and semester priorities.",
       bio: "Replace this placeholder with a short intro, technical interests, and one sentence about what this officer wants the chapter to accomplish.",
@@ -497,24 +506,14 @@ window.siteContent = {
       alt: "Placeholder image labeled Chair."
     },
     {
-      role: "Vice Chair",
-      name: "Officer Name",
+      role: "President",
+      name: "Nathan M",
       major: "Replace with major and graduation year",
       focus: "Supports operations, meeting flow, and chapter logistics.",
       bio: "Use this slot for how the vice chair helps meetings run smoothly, supports project teams, and keeps momentum between events.",
       email: "vicechair@sfsu.edu",
       image: "https://placehold.co/720x840/6c307d/f8fafc?text=Vice+Chair",
       alt: "Placeholder image labeled Vice Chair."
-    },
-    {
-      role: "Technical Projects Director",
-      name: "Officer Name",
-      major: "Replace with major and graduation year",
-      focus: "Shapes project nights, build sessions, and hands-on technical programming.",
-      bio: "This card works well for project themes, favorite tools, and how students can get involved in chapter builds.",
-      email: "projects@sfsu.edu",
-      image: "https://placehold.co/720x840/0a2a40/f8fafc?text=Projects+Director",
-      alt: "Placeholder image labeled Technical Projects Director."
     },
     {
       role: "Treasurer",
@@ -545,6 +544,16 @@ window.siteContent = {
       email: "outreach@sfsu.edu",
       image: "https://placehold.co/720x840/542461/f8fafc?text=Outreach+Director",
       alt: "Placeholder image labeled Outreach Director."
+    },
+    {
+      role: "Webmaster",
+      name: "Osiel Sales",
+      major: "Electrical Engineering, Spring 2028",
+      focus: "Shapes project nights, build sessions, and hands-on technical programming.",
+      bio: "This card works well for project themes, favorite tools, and how students can get involved in chapter builds.",
+      email: "projects@sfsu.edu",
+      image: "https://placehold.co/720x840/0a2a40/f8fafc?text=Projects+Director",
+      alt: "Placeholder image labeled Technical Projects Director."
     }
   ]
   // Dev note: past-events.html no longer has its own hand-maintained list — it's built

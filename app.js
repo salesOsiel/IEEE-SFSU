@@ -56,7 +56,31 @@
   }
 
   function isPastEvent(event) {
+    if (event.recurring) {
+      return false;
+    }
     return new Date(event.endISO || event.startISO).getTime() < Date.now();
+  }
+
+  // Sort anchor for the upcoming list. One-time events sort by their real startISO.
+  // Recurring events (event.recurring: true) sort by their NEXT occurrence, projecting
+  // the anchor's weekday/time forward from today, so they don't drift to the bottom of
+  // the list (or vanish from relevance) as their original startISO falls further behind.
+  function getEventSortDate(event) {
+    const anchor = new Date(event.startISO);
+
+    if (!event.recurring) {
+      return anchor;
+    }
+
+    const now = new Date();
+    const next = new Date(now);
+    next.setHours(anchor.getHours(), anchor.getMinutes(), anchor.getSeconds(), 0);
+    next.setDate(now.getDate() + ((anchor.getDay() - now.getDay() + 7) % 7));
+    if (next < now) {
+      next.setDate(next.getDate() + 7);
+    }
+    return next;
   }
 
   // Aug(month 7)-Dec counts as that year's fall term, Jan-Jul as the previous year's
@@ -79,6 +103,9 @@
       location: event.location || "",
       ctz: (content.googleCalendar && content.googleCalendar.timeZone) || "America/Los_Angeles"
     });
+    if (event.recurring) {
+      params.set("recur", "RRULE:FREQ=WEEKLY");
+    }
     return `https://calendar.google.com/calendar/render?${params}`;
   }
 
@@ -143,19 +170,32 @@
     `;
   }
 
+  // IEEE-run events (general meetings, SanDisk-style workshops) get a bit more visual
+  // weight than partner-org events — a blue underglow and a tinted border/badge.
+  function isHighlightedEvent(event) {
+    return event.category === "IEEE";
+  }
+
   // Shared full-size event card, used for both upcoming events (event-calendar.html,
   // with actions) and past events (past-events.html, showActions: false — "Add to
   // calendar"/"Join the Discord" don't make sense for something already over).
   function renderEventCard(event, options) {
     const showActions = !options || options.showActions !== false;
+    const highlighted = isHighlightedEvent(event);
+    const cardClasses = highlighted
+      ? "rounded-[1.9rem] border border-ieee-400/40 bg-slate-900/80 p-6 shadow-[0_0_0_1px_rgba(125,211,252,0.2),0_45px_100px_-20px_rgba(16,134,214,0.7)]"
+      : "rounded-[1.9rem] border border-white/10 bg-slate-900/80 p-6 shadow-panel";
+    const badgeClasses = highlighted
+      ? "rounded-full bg-ieee-500/20 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-ieee-100"
+      : "rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-slate-200";
 
     return `
-      <article id="${event.slug}" class="rounded-[1.9rem] border border-white/10 bg-slate-900/80 p-6 shadow-panel">
+      <article id="${event.slug}" class="${cardClasses}">
         <div class="overflow-hidden rounded-[1.5rem] border border-white/10">
           <img src="${event.image}" alt="${event.alt}" class="h-56 w-full object-cover" loading="lazy" />
         </div>
         <div class="mt-6 flex flex-wrap items-center justify-between gap-3">
-          <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-slate-200">${event.category}</span>
+          <span class="${badgeClasses}">${event.category}</span>
           <span class="text-sm font-medium text-slate-400">${event.date}</span>
         </div>
         <h3 class="mt-4 text-2xl font-bold text-white">${event.title}</h3>
@@ -566,11 +606,15 @@
 
     target.innerHTML = content.events
       .filter((event) => !isPastEvent(event))
-      .sort((a, b) => new Date(a.startISO) - new Date(b.startISO))
+      .sort((a, b) => getEventSortDate(a) - getEventSortDate(b))
       .slice(0, 3)
       .map(
         (event) => `
-          <article class="rounded-[1.9rem] border border-white/10 bg-slate-900/75 p-6 shadow-panel" data-reveal>
+          <article class="rounded-[1.9rem] border p-6 ${
+            isHighlightedEvent(event)
+              ? "border-ieee-400/40 bg-slate-900/75 shadow-[0_0_0_1px_rgba(125,211,252,0.2),0_45px_100px_-20px_rgba(16,134,214,0.7)]"
+              : "border-white/10 bg-slate-900/75 shadow-panel"
+          }" data-reveal>
             <div class="overflow-hidden rounded-[1.5rem] border border-white/10">
               <img src="${event.image}" alt="${event.alt}" class="h-52 w-full object-cover" loading="lazy" />
             </div>
@@ -955,7 +999,7 @@
     function renderCards() {
       const upcoming = content.events
         .filter((event) => !isPastEvent(event))
-        .sort((a, b) => new Date(a.startISO) - new Date(b.startISO));
+        .sort((a, b) => getEventSortDate(a) - getEventSortDate(b));
       const visibleEvents = !activeCategory
         ? upcoming
         : upcoming.filter((event) => event.category === activeCategory);
