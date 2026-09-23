@@ -191,10 +191,16 @@
 
     return `
       <article id="${event.slug}" class="${cardClasses}">
-        <div class="overflow-hidden rounded-[1.5rem] border border-white/10">
-          <img src="${event.image}" alt="${event.alt}" class="h-56 w-full object-cover" loading="lazy" />
-        </div>
-        <div class="mt-6 flex flex-wrap items-center justify-between gap-3">
+        ${
+          event.image
+            ? `
+              <div class="overflow-hidden rounded-[1.5rem] border border-white/10">
+                <img src="${event.image}" alt="${event.alt}" class="h-56 w-full object-cover" loading="lazy" />
+              </div>
+            `
+            : ""
+        }
+        <div class="${event.image ? "mt-6" : ""} flex flex-wrap items-center justify-between gap-3">
           <span class="${badgeClasses}">${event.category}</span>
           <span class="text-sm font-medium text-slate-400">${event.date}</span>
         </div>
@@ -615,10 +621,16 @@
               ? "border-ieee-400/40 bg-slate-900/75 shadow-[0_0_0_1px_rgba(125,211,252,0.2),0_45px_100px_-20px_rgba(16,134,214,0.7)]"
               : "border-white/10 bg-slate-900/75 shadow-panel"
           }" data-reveal>
-            <div class="overflow-hidden rounded-[1.5rem] border border-white/10">
-              <img src="${event.image}" alt="${event.alt}" class="h-52 w-full object-cover" loading="lazy" />
-            </div>
-            <div class="mt-6 flex items-center justify-between gap-3">
+            ${
+              event.image
+                ? `
+                  <div class="overflow-hidden rounded-[1.5rem] border border-white/10">
+                    <img src="${event.image}" alt="${event.alt}" class="h-52 w-full object-cover" loading="lazy" />
+                  </div>
+                `
+                : ""
+            }
+            <div class="${event.image ? "mt-6" : ""} flex items-center justify-between gap-3">
               <span class="rounded-full bg-ieee-500/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-ieee-100">${event.category}</span>
               <span class="text-sm font-medium text-slate-400">${event.date}</span>
             </div>

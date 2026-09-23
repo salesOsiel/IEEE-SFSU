@@ -111,7 +111,7 @@ window.siteContent = {
   // Dev note: featureStories feeds the homepage #spotlight-grid section (see index.html).
   // Add { label, title, description, href } objects here to bring that section back.
   featureStories: [],
-  eventFilters: ["IEEE", "Solar Regatta", "ASME", "Chomp City", "Research"],
+  eventFilters: ["IEEE", "Solar Regatta", "ASME", "Chomp City", "Research", "SF Hacks"],
   googleCalendar: {
     apiKey: "",
     calendarId: "",
@@ -171,6 +171,23 @@ window.siteContent = {
       image: "images/solar-gators-logo.jpg",
       alt: "Solar Gators logo.",
       discordLink: "https://discord.gg/G2dvwZGfUD"
+    },
+    {
+      slug: "sf-hacks-gdg-ai-hackathon",
+      title: "SF Hacks x GDG: AI Hackathon",
+      category: "SF Hacks",
+      date: "October 2, 2026",
+      time: "9:00 AM to 7:00 PM",
+      startISO: "2026-10-02T09:00:00",
+      endISO: "2026-10-02T19:00:00",
+      location: "Student Life Events Center / Annex I",
+      description: "A day-long AI-focused hackathon hosted by SF Hacks and GDG SFSU. All experience levels welcome.",
+      details: "Build AI-focused projects, join workshops, network with peers and industry professionals, and compete across multiple tracks for prizes. Apply by September 28. Special thanks to the SFSU AI Student Commons.",
+      // TODO(dev): swap for a real photo/logo whenever you have one.
+      image: "https://placehold.co/1200x720/1e3a5f/f8fafc?text=SF+Hacks+x+GDG",
+      alt: "SF Hacks x GDG AI Hackathon.",
+      ctaText: "Apply now",
+      registerLink: "https://gdg.sfhacks.io"
     }
   ],
   membershipBenefits: [
