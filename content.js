@@ -111,7 +111,7 @@ window.siteContent = {
   // Dev note: featureStories feeds the homepage #spotlight-grid section (see index.html).
   // Add { label, title, description, href } objects here to bring that section back.
   featureStories: [],
-  eventFilters: ["IEEE", "Solar Regatta", "ASME", "Chomp City", "Research", "SF Hacks"],
+  eventFilters: ["IEEE", "Solar Regatta", "ASME", "Chomp City", "Research", "SF Hacks", "Arm + Meta"],
   googleCalendar: {
     apiKey: "",
     calendarId: "",
@@ -121,11 +121,12 @@ window.siteContent = {
   // Dev note: ONE list for every event, past and upcoming — nothing needs to be moved
   // by hand. app.js compares startISO/endISO against the current date on every page
   // load: events that haven't happened yet show on the homepage and event-calendar.html;
-  // events that have already ended automatically show up on past-events.html, grouped
-  // by academic year (derived from startISO — Aug-Dec counts as that year's fall term,
-  // Jan-Jul as the previous year's spring term). startISO/endISO are REQUIRED on every
-  // entry — they're the only signal used for that classification, for the "Add to
-  // calendar" links, and for the academic-year grouping.
+  // IEEE events (category "IEEE") that have already ended automatically show up on
+  // past-events.html, grouped by academic year (derived from startISO — Aug-Dec counts
+  // as that year's fall term, Jan-Jul as the previous year's spring term). Non-IEEE
+  // (partner/industry) events just drop off once they're over — they are never archived.
+  // startISO/endISO are REQUIRED on every entry — they're the only signal used for that
+  // classification, for the "Add to calendar" links, and for the academic-year grouping.
   //
   // Easiest way to add a new event: open admin/add-event.html in a browser, fill out
   // the form, and paste the generated object in here.
@@ -188,6 +189,25 @@ window.siteContent = {
       alt: "SF Hacks x GDG AI Hackathon.",
       ctaText: "Apply now",
       registerLink: "https://gdg.sfhacks.io"
+    },
+    {
+      slug: "arm-meta-edge-ai-hackathon",
+      title: "Arm + Meta Edge AI Hackathon",
+      category: "Arm + Meta",
+      date: "October 17-18, 2026",
+      // TODO(dev): no start/end times were listed — startISO/endISO just span both full
+      // days so the event stays "upcoming" through Oct 18 (and "Add to calendar" shows a
+      // two-day block). Update time/startISO/endISO once the schedule is announced.
+      time: "Times TBA",
+      startISO: "2026-10-17T00:00:00",
+      endISO: "2026-10-18T23:59:00",
+      location: "Annex at SFSU",
+      description: "A 2-day hands-on hackathon building AI applications that run on edge hardware with ExecuTorch and Arm-powered Alif boards. No edge-AI experience needed.",
+      details: "Work in small teams with support from Arm and Meta ExecuTorch engineers: deploy and accelerate AI inference, build on resource-constrained hardware, work with camera, audio, and sensor data, and take an idea to a working prototype. Places are limited — sign up on Luma.",
+      image: "images/arm-edge-ai-challenge.png",
+      alt: "Arm + ExecuTorch: Edge AI Challenge event banner.",
+      ctaText: "Sign up",
+      registerLink: "https://luma.com/lu5xqt42"
     }
   ],
   membershipBenefits: [

@@ -170,10 +170,14 @@
     `;
   }
 
+  function isIeeeEvent(event) {
+    return event.category === "IEEE";
+  }
+
   // IEEE-run events (general meetings, SanDisk-style workshops) get a bit more visual
   // weight than partner-org events — a blue underglow and a tinted border/badge.
   function isHighlightedEvent(event) {
-    return event.category === "IEEE";
+    return isIeeeEvent(event);
   }
 
   // Shared full-size event card, used for both upcoming events (event-calendar.html,
@@ -1179,8 +1183,10 @@
       return;
     }
 
+    // Only our own (IEEE) events are archived; partner/industry events just drop off
+    // the calendar once they're over.
     const pastEvents = content.events
-      .filter(isPastEvent)
+      .filter((event) => isIeeeEvent(event) && isPastEvent(event))
       .sort((a, b) => new Date(b.startISO) - new Date(a.startISO));
 
     if (!pastEvents.length) {
