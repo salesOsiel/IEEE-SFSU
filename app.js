@@ -847,6 +847,43 @@
       .join("");
   }
 
+  // Turn an event into a hero slide. The uppercase label flags whether it's coming up
+  // or already happened; caption pairs the date with the location.
+  function eventToHeroSlide(event, label) {
+    const meta = [event.date, event.location].filter(Boolean).join(" · ");
+    return {
+      label,
+      title: event.title,
+      caption: meta || event.description || "",
+      image: event.image,
+      alt: event.alt || event.title
+    };
+  }
+
+  // Hero slides are driven by the events list: upcoming events first (soonest first),
+  // and if nothing is coming up, the most recent events that already happened. With no
+  // events at all, we fall back to the curated homepage pictures in content.heroSlides.
+  function getHeroSlides() {
+    const upcoming = content.events
+      .filter((event) => !isPastEvent(event))
+      .sort((a, b) => getEventSortDate(a) - getEventSortDate(b));
+
+    if (upcoming.length) {
+      return upcoming.map((event) => eventToHeroSlide(event, "Upcoming event"));
+    }
+
+    const recent = content.events
+      .filter((event) => isPastEvent(event))
+      .sort((a, b) => new Date(b.endISO || b.startISO) - new Date(a.endISO || a.startISO))
+      .slice(0, 5);
+
+    if (recent.length) {
+      return recent.map((event) => eventToHeroSlide(event, "Recent event"));
+    }
+
+    return content.heroSlides || [];
+  }
+
   function renderHeroSlideshow() {
     const target = document.getElementById("hero-slideshow");
 
@@ -854,7 +891,12 @@
       return;
     }
 
-    const slides = content.heroSlides;
+    const slides = getHeroSlides();
+
+    if (!slides.length) {
+      target.innerHTML = "";
+      return;
+    }
 
     target.innerHTML = `
       <div class="relative overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950 shadow-glow">
@@ -866,7 +908,7 @@
                 <figure class="slide absolute inset-0 ${index === 0 ? "is-active" : ""}" data-slide="${index}" aria-hidden="${index === 0 ? "false" : "true"}">
                   <img src="${slide.image}" alt="${slide.alt}" class="h-full w-full object-cover opacity-85" />
                   <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent p-6 text-white sm:p-8">
-                    <p class="text-xs font-semibold uppercase tracking-[0.24em] text-signal-300"></p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.24em] text-signal-300">${slide.label || ""}</p>
                     <h2 class="mt-3 text-2xl font-bold sm:text-3xl">${slide.title}</h2>
                     <p class="mt-3 max-w-xl text-sm leading-7 text-slate-200">${slide.caption}</p>
                   </figcaption>
