@@ -36,14 +36,12 @@ window.siteContent = {
         { label: "FAQ", href: "index.html#faq" }
       ]
     },
-    // Disabled until the officers page has real content — remove `disabled` to re-enable.
-    { label: "Officers", href: "officers.html", disabled: true },
+    { label: "Officers", href: "officers.html" },
     {
       label: "Event Calendar",
       links: [
         { label: "Upcoming Events", href: "event-calendar.html" },
-        // Disabled until past-events.html has real chapter history — remove `disabled` to re-enable.
-        { label: "Past Events", href: "past-events.html", disabled: true }
+        { label: "Past Events", href: "past-events.html" }
       ]
     },
     { label: "Support/Donate", href: "support.html" },
@@ -111,7 +109,7 @@ window.siteContent = {
   // Dev note: featureStories feeds the homepage #spotlight-grid section (see index.html).
   // Add { label, title, description, href } objects here to bring that section back.
   featureStories: [],
-  eventFilters: ["IEEE", "Solar Regatta", "ASME", "Chomp City", "Research", "SF Hacks", "Arm + Meta"],
+  eventFilters: ["IEEE", "Solar Regatta", "ASME", "Chomp City", "Research", "SF Hacks", "Arm + Meta", "Social", "Sierrathon"],
   googleCalendar: {
     apiKey: "",
     calendarId: "",
@@ -208,6 +206,55 @@ window.siteContent = {
       alt: "Arm + ExecuTorch: Edge AI Challenge event banner.",
       ctaText: "Sign up",
       registerLink: "https://luma.com/lu5xqt42"
+    },
+    {
+      slug: "halloween-bash-party",
+      title: "Halloween Bash Party",
+      category: "Social",
+      date: "October 29, 2026",
+      time: "5:00 PM to 8:00 PM",
+      startISO: "2026-10-29T17:00:00",
+      endISO: "2026-10-29T20:00:00",
+      location: "Student Center — U-Club, Mezzanine Level",
+      description: "Dance, laugh, and celebrate with us in a world of engineering ghouls, ghosts, and goblins!",
+      details: "A joint Halloween social hosted by SFSU's engineering student orgs — ESAB, ASCE, ACM, Tau Beta Pi, and more. Come in costume and RSVP to join the fun.",
+      image: "images/halloween-bash-2026.webp",
+      alt: "Halloween Bash Party flyer with a dancing skeleton.",
+      ctaText: "RSVP here",
+      registerLink: "https://forms.gle/zAXe8x73in4ySNrH7"
+    },
+    {
+      slug: "engineering-to-education",
+      title: "Engineering to Education: Jeffrey Fox",
+      category: "IEEE",
+      date: "November 2, 2026",
+      time: "5:30 PM to 7:30 PM",
+      startISO: "2026-11-02T17:30:00",
+      endISO: "2026-11-02T19:30:00",
+      location: "SFSU Engineering Building — SEIC 401",
+      description: "IEEE Life Member and RAFT Kit Engineer Jeffrey Fox shares his journey from engineering leadership at Altera and Intel to STEM education.",
+      details: "Jeff will talk about his engineering career, his nonprofit work, and the Samsung Chip2Code educational project through RAFT. Explore the hands-on materials he's bringing and join the Q&A. Free swag, food, and drinks provided.",
+      image: "images/engineering-to-education.webp",
+      alt: "Engineering to Education flyer featuring speaker Jeffrey Fox.",
+      ctaText: "Learn more on Discord",
+      registerLink: "https://discord.com/invite/zUatMA5DYS"
+    },
+    {
+      slug: "sierrathon-pcb-design-hackathon",
+      title: "Sierrathon: PCB Design Hackathon",
+      category: "Sierrathon",
+      // TODO(dev): no start/end times were on the flyer — startISO/endISO span the full
+      // day so the event stays "upcoming" through Nov 21. Update once a schedule is posted.
+      time: "Times TBA",
+      startISO: "2026-11-21T00:00:00",
+      endISO: "2026-11-21T23:59:00",
+      location: "San José State University (SJSU)",
+      description: "Sierrathon is back — an RGB PCB design hackathon at SJSU. Got the PCB basics down? Put your skills to the test.",
+      details: "Recreate a given schematic in your design tool, build a stack-up, place components according to the given constraints, and complete routing within the DRC rules. Prizes include a $2,000 grand prize, a $500 sponsorship, a mini 3D printer, and more.",
+      image: "images/sierrathon-pcb-hackathon.webp",
+      alt: "Sierrathon PCB Design Hackathon flyer.",
+      ctaText: "Register",
+      registerLink: "https://www.canvaqr.com/RGVkBFm_Bp"
     }
   ],
   membershipBenefits: [
@@ -533,64 +580,74 @@ window.siteContent = {
   ],
   officers: [
     {
-      role: "President",
+      role: "Co-President",
       name: "Diego Rey",
-      major: "Replace with major and graduation year",
+      major: "Electrical Engineering",
       focus: "Leads chapter direction, partnerships, and semester priorities.",
-      bio: "Replace this placeholder with a short intro, technical interests, and one sentence about what this officer wants the chapter to accomplish.",
-      email: "chair@sfsu.edu",
-      image: "https://placehold.co/720x840/004c79/f8fafc?text=Chair",
-      alt: "Placeholder image labeled Chair."
+      bio: "Hello! I'm Diego, Co-president of IEEE. I enjoy playing soccer, reading, and writing, meeting new people, and specializing in VLSI. Feel free to reach out anytime, and I look forward to seeing you at our upcoming events.",
+      email: "sfsu.ieee@gmail.com",
+      image: "images/officer-diego.jpg",
+      alt: "Diego Rey, IEEE at SFSU Co-President."
     },
     {
-      role: "President",
-      name: "Nathan M",
-      major: "Replace with major and graduation year",
-      focus: "Supports operations, meeting flow, and chapter logistics.",
-      bio: "Use this slot for how the vice chair helps meetings run smoothly, supports project teams, and keeps momentum between events.",
-      email: "vicechair@sfsu.edu",
-      image: "https://placehold.co/720x840/6c307d/f8fafc?text=Vice+Chair",
-      alt: "Placeholder image labeled Vice Chair."
+      role: "Co-President",
+      name: "Nathan Moua",
+      major: "Computer Engineering",
+      focus: "Guides chapter operations, meetings, and event planning.",
+      bio: "Hi, my name is Nathan Moua, my major is Computer Engineering, and I am a sixth-year.",
+      email: "sfsu.ieee@gmail.com",
+      image: "images/officer-nathan.jpg",
+      alt: "Nathan Moua, IEEE at SFSU Co-President."
     },
     {
-      role: "Treasurer",
-      name: "Officer Name",
-      major: "Replace with major and graduation year",
-      focus: "Handles budgeting, purchasing, reimbursements, and sponsorship support.",
-      bio: "You can use this bio to explain how the chapter manages funding, materials, or travel support for students.",
-      email: "treasurer@sfsu.edu",
-      image: "https://placehold.co/720x840/725400/f8fafc?text=Treasurer",
-      alt: "Placeholder image labeled Treasurer."
+      role: "Vice President & Treasurer",
+      name: "Sari Tsehaye",
+      major: "Computer Engineering",
+      focus: "Supports chapter leadership and manages budgeting and finances.",
+      bio: "Hi everyone! I'm Sari. I enjoy traveling, trying new food from different cultures, and working on creative side projects like robotics, coding, and design.",
+      email: "sfsu.ieee@gmail.com",
+      image: "images/officer-sari.jpg",
+      alt: "Sari Tsehaye, IEEE at SFSU Vice President and Treasurer."
     },
     {
       role: "Secretary",
-      name: "Officer Name",
-      major: "Replace with major and graduation year",
-      focus: "Maintains notes, announcements, documentation, and chapter communication.",
-      bio: "This is a good place to mention how chapter updates get shared and where students can find notes, recaps, or resources.",
-      email: "secretary@sfsu.edu",
-      image: "https://placehold.co/720x840/00629b/f8fafc?text=Secretary",
-      alt: "Placeholder image labeled Secretary."
+      name: "Alonzo Turner",
+      major: "Electrical Engineering",
+      focus: "Keeps notes, announcements, and chapter communication on track.",
+      bio: "Hey everyone! I'm a third-year electrical engineer with nearly a perfect GPA. I enjoy breaking down complex challenges, finding effective solutions, and working collaboratively with others to achieve shared goals.",
+      email: "sfsu.ieee@gmail.com",
+      image: "images/officer-alonzo.jpg",
+      alt: "Alonzo Turner, IEEE at SFSU Secretary."
     },
     {
-      role: "Outreach Director",
-      name: "Officer Name",
-      major: "Replace with major and graduation year",
-      focus: "Builds community on campus through partnerships, outreach, and chapter visibility.",
-      bio: "Use this slot for collaboration goals, community work, or the social side of chapter growth.",
-      email: "outreach@sfsu.edu",
-      image: "https://placehold.co/720x840/542461/f8fafc?text=Outreach+Director",
-      alt: "Placeholder image labeled Outreach Director."
+      role: "Marketing",
+      name: "Emanuel Sandoval",
+      major: "Electrical Engineering",
+      focus: "Promotes events and grows the chapter's presence on campus.",
+      bio: "Hey everyone! I'm Emanuel, and I'm one of IEEE's marketing officers. Outside of school, I enjoy watching sports, playing soccer, and hiking.",
+      email: "sfsu.ieee@gmail.com",
+      image: "images/officer-emanuel.jpg",
+      alt: "Emanuel Sandoval, IEEE at SFSU Marketing Officer."
     },
     {
-      role: "Webmaster",
+      role: "Designer",
+      name: "Haben Yohannes",
+      major: "Electrical Engineering, minor in Computer Engineering",
+      focus: "Designs chapter graphics, flyers, and visual identity.",
+      bio: "Hey everyone! I'm Haben. I'm interested in electronics, power, embedded systems, and programming, and I enjoy learning more about how hardware and software work together. Outside of engineering, I enjoy fitness, fashion, and trying new things.",
+      email: "sfsu.ieee@gmail.com",
+      image: "images/officer-haben.jpg",
+      alt: "Haben Yohannes, IEEE at SFSU Designer."
+    },
+    {
+      role: "Website Developer",
       name: "Osiel Sales",
-      major: "Electrical Engineering, Spring 2028",
-      focus: "Shapes project nights, build sessions, and hands-on technical programming.",
-      bio: "This card works well for project themes, favorite tools, and how students can get involved in chapter builds.",
-      email: "projects@sfsu.edu",
-      image: "https://placehold.co/720x840/0a2a40/f8fafc?text=Projects+Director",
-      alt: "Placeholder image labeled Technical Projects Director."
+      major: "Electrical Engineering",
+      focus: "Builds and maintains the chapter website.",
+      bio: "Hey everyone, my name is Osiel. I'm a third-year electrical engineering student. Outside of school, I like to play music, build models, and code.",
+      email: "sfsu.ieee@gmail.com",
+      image: "images/officer-osiel.jpg",
+      alt: "Osiel Sales, IEEE at SFSU Website Developer."
     }
   ]
   // Dev note: past-events.html no longer has its own hand-maintained list — it's built

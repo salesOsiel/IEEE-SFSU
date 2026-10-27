@@ -174,6 +174,13 @@
     return event.category === "IEEE";
   }
 
+  // Categories that get archived to past-events.html once they're over. Our own IEEE
+  // events plus chapter socials (Halloween Bash, etc.) are kept as chapter history;
+  // partner/industry events still just drop off the calendar.
+  function isArchivedEvent(event) {
+    return event.category === "IEEE" || event.category === "Social";
+  }
+
   // IEEE-run events (general meetings, SanDisk-style workshops) get a bit more visual
   // weight than partner-org events — a blue underglow and a tinted border/badge.
   function isHighlightedEvent(event) {
@@ -1183,10 +1190,10 @@
       return;
     }
 
-    // Only our own (IEEE) events are archived; partner/industry events just drop off
-    // the calendar once they're over.
+    // Our own (IEEE) events and chapter socials are archived; partner/industry events
+    // just drop off the calendar once they're over.
     const pastEvents = content.events
-      .filter((event) => isIeeeEvent(event) && isPastEvent(event))
+      .filter((event) => isArchivedEvent(event) && isPastEvent(event))
       .sort((a, b) => new Date(b.startISO) - new Date(a.startISO));
 
     if (!pastEvents.length) {
